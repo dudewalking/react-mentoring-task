@@ -1,0 +1,19 @@
+@import '~css-reset-and-normalize-sass/scss/reset-and-normalize';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+@import "components/container.scss";
+
+.app {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.app-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 600px;
+  width: 700px;
+  border: 1px solid black;
+}
