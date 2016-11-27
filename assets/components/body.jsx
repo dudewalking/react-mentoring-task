@@ -1,15 +1,19 @@
 "use strict";
 
 import React from "react";
-import {ProgressBar, FormGroup, InputGroup, Button, FormControl} from "react-bootstrap";
+import {ProgressBar} from "react-bootstrap";
+
+import CategoriesTree from "./categoriesTree.jsx";
+import SubtasksList from "./subtasksList.jsx";
 
 export default class Body extends React.Component {
+
     render() {
         return (
             <div className="body-container">
                 <Progress />
-                <Categories />
-                <Subtasks />
+                <Categories categories={this.props.categories}/>
+                <Subtasks todos={this.props.todos} />
             </div>
         );
     }
@@ -20,8 +24,7 @@ class Categories extends React.Component {
     render() {
         return (
             <div className="categories">
-                <CategoryButton />
-                {/*<CategoriesTree />*/}
+                <CategoriesTree categories={this.props.categories}/>
             </div>
         );
     }
@@ -32,8 +35,7 @@ class Subtasks extends React.Component {
     render() {
         return (
             <div className="subtasks">
-                <SubtaskButton />
-                {/*<SubtasksList />*/}
+                <SubtasksList todos={this.props.todos}/>
             </div>
         );
     }
@@ -49,33 +51,3 @@ class Progress extends React.Component {
     }
 }
 
-
-class CategoryButton extends React.Component {
-    render() {
-        return (
-            <FormGroup className="category-input">
-                <InputGroup>
-                    <FormControl type="text" placeholder="Enter category title"/>
-                    <InputGroup.Button>
-                        <Button>Add</Button>
-                    </InputGroup.Button>
-                </InputGroup>
-            </FormGroup>
-        );
-    }
-}
-
-class SubtaskButton extends React.Component {
-    render() {
-        return (
-            <FormGroup className="subtask-input">
-                <InputGroup>
-                    <FormControl type="text" placeholder="Text input with button"/>
-                    <InputGroup.Button>
-                        <Button>Add</Button>
-                    </InputGroup.Button>
-                </InputGroup>
-            </FormGroup>
-        );
-    }
-}

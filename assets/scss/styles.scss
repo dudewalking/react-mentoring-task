@@ -3,11 +3,19 @@
 
 @import "components/container";
 @import "components/body";
+@import "components/categoriesTree";
+@import "components/subtasksList";
+
+@font-face {
+  font-family: toms;
+  src: url(fonts/toms.ttf);
+}
 
 .app {
+  font-family: toms, serif;
   display: flex;
   justify-content: center;
-  margin: 50px;
+  margin: 0 50px 0 50px;
   min-width: 1000px;
 }
 

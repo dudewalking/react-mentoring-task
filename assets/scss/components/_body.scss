@@ -18,13 +18,11 @@
 }
 
 .categories {
-  display: flex;
   width: 35%;
 }
 
 .subtasks {
-  display: flex;
-  width: 65%;
+  width: 60%;
 }
 
 .category-input {
@@ -35,6 +33,5 @@
 .subtask-input {
   width: 50%;
   margin-left: auto;
-  margin-right: 10px;
+  margin-right: 35px;
 }
-
