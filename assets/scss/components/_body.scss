@@ -1,0 +1,40 @@
+.body-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.body-container > .todo-progress {
+  flex: 100%;
+}
+
+.body-container > .categories {
+  margin-right: auto;
+}
+
+.todo-progress {
+  margin-top: 20px;
+}
+
+.categories {
+  display: flex;
+  width: 35%;
+}
+
+.subtasks {
+  display: flex;
+  width: 65%;
+}
+
+.category-input {
+  width: 65%;
+  margin-left: 10px;
+}
+
+.subtask-input {
+  width: 50%;
+  margin-left: auto;
+  margin-right: 10px;
+}
+

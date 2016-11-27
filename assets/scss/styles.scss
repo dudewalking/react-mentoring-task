@@ -1,0 +1,14 @@
+@import '../../node_modules/css-reset-and-normalize-sass/scss/reset-and-normalize';
+@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+
+@import "components/container";
+@import "components/body";
+
+.app {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+  min-width: 1000px;
+}
+
+

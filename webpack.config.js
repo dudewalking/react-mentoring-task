@@ -24,7 +24,7 @@ module.exports = [
     },
     {
         name: 'css',
-        entry: './assets/styles/main.scss',
+        entry: './assets/scss/styles.scss',
         output: {path: __dirname + '/build', filename: 'styles.css'},
         module: {
             loaders: [
