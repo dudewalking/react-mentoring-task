@@ -11,17 +11,19 @@
 
 .tasks-item {
   display: flex;
-  border: solid gray 1px;
-  padding: 20px;
-  margin-right: 20px;
-  line-height: 32px;
+  border: solid lightgrey 1px;
+  align-items: center;
+  padding: 30px;
 }
 
 .tasks-item > a {
   margin-left: auto;
   padding: 10px;
   color: black;
+}
 
+.tasks-item > .checkbox input[type="checkbox"]   {
+  position: relative;
 }
 
 .task-text {

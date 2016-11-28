@@ -5,7 +5,7 @@ import {Glyphicon, FormGroup, InputGroup, FormControl, Button} from "react-boots
 
 export class Categories extends React.Component {
 
-    _showSubtasks(id){
+    _showSubtasks(id) {
         this.props.showSubtasks(id);
     }
 
@@ -20,7 +20,7 @@ export class Categories extends React.Component {
 
 export class CategoriesList extends React.Component {
 
-    _showSubtasks(id){
+    _showSubtasks(id) {
         this.props.showSubtasks(id);
     }
 
@@ -29,6 +29,7 @@ export class CategoriesList extends React.Component {
             return <Category name={category.name}
                              id={category.id}
                              key={category.id}
+                             isMain={this.props.isMain}
                              showSubtasks={this._showSubtasks.bind(this)}
                              subCategories={category.subCategories}/>;
         });
@@ -61,22 +62,50 @@ export class AddCategory extends React.Component {
 
 class Category extends React.Component {
 
-    _showSubtasks(){
+    _showSubtasks() {
         this.props.showSubtasks(this.props.id);
     }
 
     render() {
         return (
             <li className="category-item" onClick={this._showSubtasks.bind(this)}>
-                {this.props.subCategories.length > 0 ? <Glyphicon glyph="menu-down"/> : null}
+                {this.props.subCategories.length > 0
+                    ? <Glyphicon glyph="menu-down"/>
+                    : null}
+
                 <span className="category-text">{this.props.name}</span>
+
+                {this.props.isMain
+                    ? <MainCategoryTools />
+                    : <TodoCategoryTools/>}
+            </li>
+        );
+    }
+}
+
+class MainCategoryTools extends React.Component {
+    render() {
+        return (
+            <div className="category-tool">
                 <Glyphicon glyph="edit"/>
-                <span className="pull-right category-tool">
+                <div className="pull-right">
                     <Glyphicon glyph="trash"/>
                     <span> </span>
                     <Glyphicon glyph="plus"/>
-                </span>
-            </li>
+                </div>
+            </div>
+        );
+    }
+}
+
+class TodoCategoryTools extends React.Component {
+    render() {
+        return (
+            <div className="category-tool">
+                <Button className="pull-right">
+                    <Glyphicon glyph="backward"/>
+                </Button>
+            </div>
         );
     }
 }

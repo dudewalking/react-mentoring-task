@@ -27,7 +27,7 @@ export default class TodoPage extends React.Component {
                 </Header>
                 <Body>
                     <Categories>
-                        <CategoriesList categories={this.props.categories}/>
+                        <CategoriesList isMain={false} categories={this.props.categories}/>
                     </Categories>
                     <Task todo={todo}/>
                 </Body>

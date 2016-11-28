@@ -3,7 +3,6 @@
 import React from "react";
 import {Checkbox, FormGroup, Glyphicon, FormControl, ProgressBar} from "react-bootstrap";
 
-import AppContainer from "./appContainer.jsx";
 import Header from "./header.jsx";
 import Body from "./body.jsx";
 import Tasks from "./tasks.jsx";
@@ -34,7 +33,9 @@ export default class MainPage extends React.Component {
                 <Body>
                     <Categories>
                         <AddCategory />
-                        <CategoriesList categories={this.props.categories} showSubtasks={this._showSubtasks.bind(this)}/>
+                        <CategoriesList categories={this.props.categories}
+                                        isMain={true}
+                                        showSubtasks={this._showSubtasks.bind(this)}/>
                     </Categories>
                     <Tasks categories={this.props.categories} categoryId={this.state.category}/>
                 </Body>
@@ -61,7 +62,7 @@ class Progress extends React.Component {
     render() {
         return (
             <div className="todo-progress">
-                <ProgressBar now={60}/>
+                <ProgressBar now={60} label={`${60}%`}/>
             </div>
         );
     }
