@@ -1,6 +1,11 @@
+
+.categories {
+  width: 35%;
+}
+
 .categories-tree {
   width: 100%;
-  height: 500px;
+  height: 100%;
   overflow-y: scroll;
 }
 
@@ -18,4 +23,9 @@
   margin-right: 10px;
   font-size: larger;
   color: #5bc0de;
+}
+
+.category-input {
+  width: 65%;
+  margin-left: 10px;
 }

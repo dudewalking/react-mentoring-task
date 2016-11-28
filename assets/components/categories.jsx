@@ -1,27 +1,35 @@
 "use strict";
 
 import React from "react";
-import {FormGroup, InputGroup, FormControl, Button, Glyphicon} from "react-bootstrap";
+import {Glyphicon, FormGroup, InputGroup, FormControl, Button} from "react-bootstrap";
 
-export default class CategoriesTree extends React.Component {
+export class Categories extends React.Component {
+
+    _showSubtasks(id){
+        this.props.showSubtasks(id);
+    }
+
     render() {
         return (
-            <div>
-                <AddCategory />
-                <CategoriesList categories={this.props.categories}/>
+            <div className="categories">
+                {this.props.children}
             </div>
         );
     }
 }
 
-class CategoriesList extends React.Component {
-    render() {
+export class CategoriesList extends React.Component {
 
-        const categories = [...this.props.categories].map((category) => {
-            console.log(category);
+    _showSubtasks(id){
+        this.props.showSubtasks(id);
+    }
+
+    render() {
+        const categories = this.props.categories.map((category) => {
             return <Category name={category.name}
                              id={category.id}
                              key={category.id}
+                             showSubtasks={this._showSubtasks.bind(this)}
                              subCategories={category.subCategories}/>;
         });
 
@@ -35,7 +43,7 @@ class CategoriesList extends React.Component {
     }
 }
 
-class AddCategory extends React.Component {
+export class AddCategory extends React.Component {
     render() {
         return (
             <FormGroup className="category-input">
@@ -50,16 +58,18 @@ class AddCategory extends React.Component {
     }
 }
 
+
 class Category extends React.Component {
+
+    _showSubtasks(){
+        this.props.showSubtasks(this.props.id);
+    }
+
     render() {
         return (
-            <li className="category-item">
-                {this.props.subCategories.length > 0
-                    ? <Glyphicon glyph="menu-down"/>
-                    : null}
-
+            <li className="category-item" onClick={this._showSubtasks.bind(this)}>
+                {this.props.subCategories.length > 0 ? <Glyphicon glyph="menu-down"/> : null}
                 <span className="category-text">{this.props.name}</span>
-
                 <Glyphicon glyph="edit"/>
                 <span className="pull-right category-tool">
                     <Glyphicon glyph="trash"/>

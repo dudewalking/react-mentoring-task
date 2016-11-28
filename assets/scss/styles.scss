@@ -1,21 +1,22 @@
 @import '../../node_modules/css-reset-and-normalize-sass/scss/reset-and-normalize';
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
-@import "components/container";
+@import "components/appContainer";
 @import "components/body";
-@import "components/categoriesTree";
-@import "components/subtasksList";
+@import "components/header";
+@import "components/categories";
+@import "components/task";
+@import "components/tasks";
+@import "components/mainPage";
+@import "components/todoPage";
 
-@font-face {
-  font-family: toms;
-  src: url(fonts/toms.ttf);
+html, body, .app{
+  height: 100%;
 }
 
 .app {
-  font-family: toms, serif;
   display: flex;
   justify-content: center;
-  margin: 0 50px 0 50px;
   min-width: 1000px;
 }
 

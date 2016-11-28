@@ -5,19 +5,21 @@ import {Link} from "react-router";
 import {FormGroup, InputGroup, FormControl, Checkbox, Button, Glyphicon} from "react-bootstrap";
 
 
-export default class SubtasksList extends React.Component {
-
+export default class Tasks extends React.Component {
     render() {
-        const todos = [...this.props.todos].map((todo) => {
-            return (
-                <Todo todo={todo} key={todo.id}/>
-            );
-        });
+        const id = this.props.categoryId;
+        let todos = [];
+
+        if (id !== 0) {
+            this.props.categories[id - 1].tasks.map(todo => {
+                todos.push(<Todo todo={todo} key={todo.id}/>);
+            });
+        }
 
         return (
-            <div>
+            <div className="tasks">
                 <AddTodo />
-                <div className="subtasks-list">
+                <div className="tasks-list">
                     <ul>
                         {todos}
                     </ul>
@@ -31,7 +33,7 @@ export default class SubtasksList extends React.Component {
 class AddTodo extends React.Component {
     render() {
         return (
-            <FormGroup className="subtask-input">
+            <FormGroup className="task-input">
                 <InputGroup>
                     <FormControl type="text" placeholder="Text input with button"/>
                     <InputGroup.Button>
@@ -47,12 +49,12 @@ class Todo extends React.Component {
 
     render() {
         return (
-            <li className="subtasks-item">
+            <li className="tasks-item">
                 <Checkbox>
-                    <span className="subtask-text">{this.props.todo.name}</span>
+                    <span className="task-text">{this.props.todo.name}</span>
                 </Checkbox>
                 <Link to={`/todo/${this.props.todo.id}`}>
-                    <Glyphicon glyph="edit" style={{cursor: "pointer"}} />
+                    <Glyphicon glyph="edit" style={{cursor: "pointer"}}/>
                 </Link>
             </li>
         );

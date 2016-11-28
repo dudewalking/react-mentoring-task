@@ -2,14 +2,17 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import {Router, Route, hashHistory} from "react-router";
+import {Router, Route, IndexRoute, hashHistory} from "react-router";
 
-import Container from "./components/container.jsx";
-import Todo from "./components/specificTodo.jsx";
+import AppContainer from "./components/appContainer.jsx";
+import MainPage from "./components/mainPage.jsx";
+import TodoPage from "./components/todoPage.jsx";
 
 ReactDOM.render(
     <Router history={hashHistory}>
-        <Route path="/" component={Container}/>
-        <Route path="/todo/:id" component={Todo}/>
+        <Route path="/" component={AppContainer}>
+            <IndexRoute component={MainPage}/>
+            <Route path="/todo/:id" component={TodoPage}/>
+        </Route>
     </Router>,
     document.getElementById("app"));
