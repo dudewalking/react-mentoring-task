@@ -39,8 +39,14 @@
   padding: 0 10px;
 }
 
+.category-expand-arrow {
+  margin-right: 5px;
+  color: black;
+  cursor: pointer;
+}
+
 .category-text {
-  padding-left: 20px;
+  margin-left: 20px;
   margin-right: 10px;
   font-size: larger;
   color: #5bc0de;

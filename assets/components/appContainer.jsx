@@ -15,7 +15,10 @@ export default class AppContainer extends React.Component {
                         {id: 1, name: "To-Do Item #1", isDone: true},
                         {id: 2, name: "To-Do Item #2", isDone: true}
                     ],
-                    subCategories: []
+                    subCategories: [
+                        {id: 1, name: "Category 1_1"},
+                        {id: 2, name: "Category 1_2"}
+                    ]
                 },
                 {
                     id: 2,
@@ -24,7 +27,10 @@ export default class AppContainer extends React.Component {
                         {id: 3, name: "To-Do Item #3", isDone: false},
                         {id: 4, name: "To-Do Item #4", isDone: false}
                     ],
-                    subCategories: []
+                    subCategories: [
+                        {id: 3, name: "Category 2_1"},
+                        {id: 4, name: "Category 2_2"}
+                    ]
                 },
                 {
                     id: 3,
@@ -33,8 +39,8 @@ export default class AppContainer extends React.Component {
                         {id: 5, name: "To-Do Item #5", isDone: false}
                     ],
                     subCategories: [
-                        {id: 1, name: "Category 3_1"},
-                        {id: 2, name: "Category 3_2"}
+                        {id: 5, name: "Category 3_1"},
+                        {id: 6, name: "Category 3_2"}
                     ]
                 },
             ]

@@ -20,10 +20,10 @@ export class Categories extends React.Component {
 
 export class CategoriesList extends React.Component {
 
-    constructor(){
+    constructor() {
         super();
-        this.state={
-            catId: 0
+        this.state = {
+            categoryId: 0
         };
     }
 
@@ -35,7 +35,7 @@ export class CategoriesList extends React.Component {
     render() {
         const categories = this.props.categories.map((category) => {
             return <Category name={category.name}
-                             isSelected={category.id === this.state.catId}
+                             isSelected={category.id === this.state.categoryId}
                              id={category.id}
                              key={category.id}
                              isMain={this.props.isMain}
@@ -77,13 +77,16 @@ class Category extends React.Component {
 
     render() {
         return (
-            <li className={this.props.isSelected ? "category-item-selected" : "category-item"} onClick={this._showSubtasks.bind(this)}>
+            <li className={this.props.isSelected ? "category-item-selected" : "category-item"}>
 
                 {this.props.subCategories.length > 0
-                    ? <Glyphicon glyph="menu-down"/>
+                    ? <Glyphicon glyph="menu-down" className="category-expand-arrow"
+                                 onClick={() => console.log("test")}/>
                     : null}
 
-                <span className="category-text">{this.props.name}</span>
+                <span className="category-text" onClick={this._showSubtasks.bind(this)}>
+                    {this.props.name}
+                </span>
 
                 {this.props.isMain
                     ? <MainCategoryTools />

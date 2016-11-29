@@ -10,7 +10,7 @@ export default class Tasks extends React.Component {
         const id = this.props.categoryId;
         let todos = [];
 
-        if (id !== 0) {
+        if (id) {
             this.props.categories[id - 1].tasks.map(todo => {
                 todos.push(<Todo todo={todo} key={todo.id}/>);
             });
