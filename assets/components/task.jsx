@@ -25,7 +25,7 @@ export default class Task extends React.Component {
 class SaveChanges extends React.Component {
     render() {
         return (
-            <Button bsStyle="primary">Save changes</Button>
+            <Button bsStyle="danger">Save changes</Button>
         );
     }
 }

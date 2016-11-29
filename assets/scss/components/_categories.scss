@@ -16,7 +16,18 @@
 }
 
 .category-item:hover {
-  background-color: whitesmoke;
+  background-color: ghostwhite;
+}
+
+.category-item-selected{
+  display: flex;
+  padding: 4px 5px 2px 20px;
+  border: solid lightgrey 1px;
+}
+
+.category-item-selected > span {
+  color: black;
+  font-weight: bold;
 }
 
 .category-tool {

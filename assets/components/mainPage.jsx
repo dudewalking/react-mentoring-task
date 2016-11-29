@@ -62,7 +62,7 @@ class Progress extends React.Component {
     render() {
         return (
             <div className="todo-progress">
-                <ProgressBar now={60} label={`${60}%`}/>
+                <ProgressBar bsStyle="success" now={60} label={`${60}%`}/>
             </div>
         );
     }

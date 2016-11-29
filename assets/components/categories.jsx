@@ -20,13 +20,22 @@ export class Categories extends React.Component {
 
 export class CategoriesList extends React.Component {
 
+    constructor(){
+        super();
+        this.state={
+            catId: 0
+        };
+    }
+
     _showSubtasks(id) {
+        this.setState({catId: id});
         this.props.showSubtasks(id);
     }
 
     render() {
         const categories = this.props.categories.map((category) => {
             return <Category name={category.name}
+                             isSelected={category.id === this.state.catId}
                              id={category.id}
                              key={category.id}
                              isMain={this.props.isMain}
@@ -51,7 +60,7 @@ export class AddCategory extends React.Component {
                 <InputGroup>
                     <FormControl type="text" placeholder="Enter category title"/>
                     <InputGroup.Button>
-                        <Button>Add</Button>
+                        <Button bsStyle="danger">Add</Button>
                     </InputGroup.Button>
                 </InputGroup>
             </FormGroup>
@@ -68,7 +77,8 @@ class Category extends React.Component {
 
     render() {
         return (
-            <li className="category-item" onClick={this._showSubtasks.bind(this)}>
+            <li className={this.props.isSelected ? "category-item-selected" : "category-item"} onClick={this._showSubtasks.bind(this)}>
+
                 {this.props.subCategories.length > 0
                     ? <Glyphicon glyph="menu-down"/>
                     : null}
@@ -90,7 +100,7 @@ class MainCategoryTools extends React.Component {
                 <Glyphicon glyph="edit"/>
                 <div className="pull-right">
                     <Glyphicon glyph="trash"/>
-                    <span> </span>
+                    <span>  </span>
                     <Glyphicon glyph="plus"/>
                 </div>
             </div>

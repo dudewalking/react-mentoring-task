@@ -1,6 +1,5 @@
 @import '../../node_modules/css-reset-and-normalize-sass/scss/reset-and-normalize';
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-
 @import "components/appContainer";
 @import "components/body";
 @import "components/header";
@@ -10,7 +9,7 @@
 @import "components/mainPage";
 @import "components/todoPage";
 
-html, body, .app{
+html, body, .app {
   height: 100%;
 }
 
@@ -18,6 +17,10 @@ html, body, .app{
   display: flex;
   justify-content: center;
   min-width: 1000px;
+}
+
+.form-control {
+  height: 33px;
 }
 
 

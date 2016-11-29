@@ -37,7 +37,7 @@ class AddTodo extends React.Component {
                 <InputGroup>
                     <FormControl type="text" placeholder="Text input with button"/>
                     <InputGroup.Button>
-                        <Button>Add</Button>
+                        <Button bsStyle="danger">Add</Button>
                     </InputGroup.Button>
                 </InputGroup>
             </FormGroup>

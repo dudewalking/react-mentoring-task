@@ -9,6 +9,10 @@
   overflow-y: scroll;
 }
 
+.tasks-list > ul {
+  margin-right: 20px;
+}
+
 .tasks-item {
   display: flex;
   border: solid lightgrey 1px;
