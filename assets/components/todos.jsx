@@ -5,14 +5,18 @@ import {Link} from "react-router";
 import {FormGroup, InputGroup, FormControl, Checkbox, Button, Glyphicon} from "react-bootstrap";
 
 
-export default class Tasks extends React.Component {
+export default class Todos extends React.Component {
     render() {
         const id = this.props.categoryId;
         let todos = [];
 
         if (id) {
-            this.props.categories[id - 1].tasks.map(todo => {
-                todos.push(<Todo todo={todo} key={todo.id}/>);
+            [...this.props.categories].filter(category => {
+                if (category.id === id) {
+                    category.todos.map(todo => {
+                        todos.push(<Todo todo={todo} key={todo.id}/>);
+                    });
+                }
             });
         }
 
@@ -46,7 +50,6 @@ class AddTodo extends React.Component {
 }
 
 class Todo extends React.Component {
-
     render() {
         return (
             <li className="tasks-item">

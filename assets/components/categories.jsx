@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import {Glyphicon, FormGroup, InputGroup, FormControl, Button} from "react-bootstrap";
+import {Glyphicon, FormGroup, InputGroup, Button} from "react-bootstrap";
 
 export class Categories extends React.Component {
 
@@ -53,14 +53,27 @@ export class CategoriesList extends React.Component {
     }
 }
 
-export class AddCategory extends React.Component {
+export class CategoryAddButton extends React.Component {
+
+    _addCategory(name) {
+        this.props.addCategory(name);
+    }
+
     render() {
         return (
             <FormGroup className="category-input">
                 <InputGroup>
-                    <FormControl type="text" placeholder="Enter category title"/>
+                    <input className="form-control"
+                           type="text"
+                           placeholder="Enter category title"
+                           ref={input => this.input = input}/>
                     <InputGroup.Button>
-                        <Button bsStyle="danger">Add</Button>
+                        <Button bsStyle="danger" onClick={() => {
+                            if (this.input.value) {
+                                this._addCategory(this.input.value);
+                                this.input.value = "";
+                            }
+                        }}>Add</Button>
                     </InputGroup.Button>
                 </InputGroup>
             </FormGroup>
@@ -85,8 +98,8 @@ class Category extends React.Component {
                     : null}
 
                 <span className="category-text" onClick={this._showSubtasks.bind(this)}>
-                    {this.props.name}
-                </span>
+        {this.props.name}
+        </span>
 
                 {this.props.isMain
                     ? <MainCategoryTools />

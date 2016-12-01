@@ -5,7 +5,7 @@ import {Link} from "react-router";
 import {Button, FormControl, FormGroup, Checkbox} from "react-bootstrap";
 
 
-export default class Task extends React.Component {
+export default class TodoInfo extends React.Component {
     render() {
         return (
             <div className="task">

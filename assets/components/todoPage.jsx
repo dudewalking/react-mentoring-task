@@ -3,7 +3,7 @@
 import React from "react";
 import Header from "./header.jsx";
 import Body from "./body.jsx";
-import Task from "./task.jsx";
+import TodoInfo from "./todoInfo.jsx";
 import {Categories, CategoriesList} from "./categories.jsx";
 
 export default class TodoPage extends React.Component {
@@ -13,7 +13,7 @@ export default class TodoPage extends React.Component {
         let todo = null;
 
         this.props.categories.forEach(category => {
-            category.tasks.map(task => {
+            category.todos.map(task => {
                 if (task.id == taskId) {
                     todo = task;
                 }
@@ -29,7 +29,7 @@ export default class TodoPage extends React.Component {
                     <Categories>
                         <CategoriesList isMain={false} categories={this.props.categories}/>
                     </Categories>
-                    <Task todo={todo}/>
+                    <TodoInfo todo={todo}/>
                 </Body>
             </div>
         );

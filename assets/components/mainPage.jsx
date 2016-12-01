@@ -5,8 +5,8 @@ import {Checkbox, FormGroup, Glyphicon, FormControl, ProgressBar} from "react-bo
 
 import Header from "./header.jsx";
 import Body from "./body.jsx";
-import Tasks from "./tasks.jsx";
-import {Categories, CategoriesList, AddCategory} from "./categories.jsx";
+import Todos from "./todos.jsx";
+import {Categories, CategoriesList, CategoryAddButton} from "./categories.jsx";
 
 export default class MainPage extends React.Component {
 
@@ -21,6 +21,10 @@ export default class MainPage extends React.Component {
         this.setState({category: id});
     }
 
+    _addCategory(name) {
+        this.props.addCategory(name);
+    }
+
     render() {
         return (
             <div className="main-page">
@@ -32,12 +36,12 @@ export default class MainPage extends React.Component {
                 <Progress />
                 <Body>
                     <Categories>
-                        <AddCategory />
+                        <CategoryAddButton addCategory={this._addCategory.bind(this)}/>
                         <CategoriesList categories={this.props.categories}
                                         isMain={true}
                                         showSubtasks={this._showSubtasks.bind(this)}/>
                     </Categories>
-                    <Tasks categories={this.props.categories} categoryId={this.state.category}/>
+                    <Todos categories={this.props.categories} categoryId={this.state.category}/>
                 </Body>
             </div>
         );

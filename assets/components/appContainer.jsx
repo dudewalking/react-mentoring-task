@@ -11,19 +11,19 @@ export default class AppContainer extends React.Component {
                 {
                     id: 1,
                     name: "Category 1",
-                    tasks: [
+                    todos: [
                         {id: 1, name: "To-Do Item #1", isDone: true},
                         {id: 2, name: "To-Do Item #2", isDone: true}
                     ],
                     subCategories: [
                         {id: 1, name: "Category 1_1"},
-                        {id: 2, name: "Category 1_2"}
+                        {id: 2, name: "Category 1_2"},
                     ]
                 },
                 {
                     id: 2,
                     name: "Category 2",
-                    tasks: [
+                    todos: [
                         {id: 3, name: "To-Do Item #3", isDone: false},
                         {id: 4, name: "To-Do Item #4", isDone: false}
                     ],
@@ -35,7 +35,7 @@ export default class AppContainer extends React.Component {
                 {
                     id: 3,
                     name: "Category 3",
-                    tasks: [
+                    todos: [
                         {id: 5, name: "To-Do Item #5", isDone: false}
                     ],
                     subCategories: [
@@ -45,13 +45,16 @@ export default class AppContainer extends React.Component {
                 },
             ]
         };
+        this.addCategory = this.addCategory.bind(this);
+        this.addTodo = this.addTodo.bind(this);
     }
 
     render() {
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
                 categories: this.state.categories,
-                header: this.state.header
+                header: this.state.header,
+                addCategory: this.addCategory.bind(this)
             })
         );
 
@@ -60,6 +63,25 @@ export default class AppContainer extends React.Component {
                 {childrenWithProps}
             </div>
         );
+    }
+
+    addCategory(name) {
+        const updatedCategories = [...this.state.categories];
+
+        updatedCategories.unshift({
+            id: this.state.categories.length + 1,
+            name: name,
+            todos: [],
+            subCategories: []
+        });
+
+        this.setState({
+            categories: updatedCategories
+        });
+    }
+
+    addTodo() {
+
     }
 }
 
