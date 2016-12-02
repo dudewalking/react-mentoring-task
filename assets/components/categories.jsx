@@ -1,6 +1,7 @@
 "use strict";
 
 import React from "react";
+import {Link} from "react-router";
 import {Glyphicon, FormGroup, InputGroup, Button} from "react-bootstrap";
 
 export class Categories extends React.Component {
@@ -25,22 +26,21 @@ export class CategoriesList extends React.Component {
         this.state = {
             categoryId: 0
         };
+        this._showSubtasks = this._showSubtasks.bind(this);
     }
 
-    _showSubtasks(id) {
-        this.setState({catId: id});
-        this.props.showSubtasks(id);
+    _showSubtasks(category) {
+        this.setState({categoryId: category.id});
+        this.props.showSubtasks(category);
     }
 
     render() {
         const categories = this.props.categories.map((category) => {
-            return <Category name={category.name}
-                             isSelected={category.id === this.state.categoryId}
-                             id={category.id}
+            return <Category isSelected={category.id === this.state.categoryId}
                              key={category.id}
-                             isMain={this.props.isMain}
-                             showSubtasks={this._showSubtasks.bind(this)}
-                             subCategories={category.subCategories}/>;
+                             isTodoList={this.props.isTodoList}
+                             showSubtasks={this._showSubtasks}
+                             category={category}/>;
         });
 
         return (
@@ -84,32 +84,37 @@ export class CategoryAddButton extends React.Component {
 
 class Category extends React.Component {
 
+    constructor() {
+        super();
+        this._showSubtasks = this._showSubtasks.bind(this);
+    }
+
     _showSubtasks() {
-        this.props.showSubtasks(this.props.id);
+        this.props.showSubtasks(this.props.category);
     }
 
     render() {
         return (
-            <li className={this.props.isSelected ? "category-item-selected" : "category-item"}>
-
-                {this.props.subCategories.length > 0
-                    ? <Glyphicon glyph="menu-down" className="category-expand-arrow"
-                                 onClick={() => console.log("test")}/>
+            <li className="category-item">
+                {this.props.category.subCategories.length > 0
+                    ? <Glyphicon glyph="menu-down" className="category-expand-arrow"/>
                     : null}
 
-                <span className="category-text" onClick={this._showSubtasks.bind(this)}>
-        {this.props.name}
-        </span>
+                <span className="category-text" onClick={this._showSubtasks}>
+                    <Link to={`category/${this.props.category.id-1}`} activeClassName="category-item-selected">
+                        {this.props.category.name}
+                    </Link>
+                </span>
 
-                {this.props.isMain
-                    ? <MainCategoryTools />
-                    : <TodoCategoryTools/>}
+                {this.props.isTodoList
+                    ? <TodoListTools />
+                    : <TodoTools/>}
             </li>
         );
     }
 }
 
-class MainCategoryTools extends React.Component {
+class TodoListTools extends React.Component {
     render() {
         return (
             <div className="category-tool">
@@ -124,7 +129,7 @@ class MainCategoryTools extends React.Component {
     }
 }
 
-class TodoCategoryTools extends React.Component {
+class TodoTools extends React.Component {
     render() {
         return (
             <div className="category-tool">

@@ -1,63 +1,64 @@
 "use strict";
 
 import React from "react";
-import {Checkbox, FormGroup, Glyphicon, FormControl, ProgressBar} from "react-bootstrap";
-
-import Header from "./header.jsx";
+import {ProgressBar} from "react-bootstrap";
 import Body from "./body.jsx";
-import Todos from "./todos.jsx";
 import {Categories, CategoriesList, CategoryAddButton} from "./categories.jsx";
 
 export default class MainPage extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            category: 0
+            category: props.categories[props.params.id[0]],
         };
+        this._addCategory = this._addCategory.bind(this);
+        this._showSubtasks = this._showSubtasks.bind(this);
     }
 
-    _showSubtasks(id) {
-        this.setState({category: id});
+    _showSubtasks(category) {
+        this.props.categories.filter(item => {
+            if (item.id === category.id) {
+                this.setState({category: category});
+            }
+        });
     }
 
     _addCategory(name) {
         this.props.addCategory(name);
     }
 
+    _addTodo(name) {
+        this.props.addTodo(this.state.category, name);
+    }
+
     render() {
+
+        const childrenWithProps = React.Children.map(this.props.children,
+            (child) => React.cloneElement(child, {
+                category: this.state.category,
+            })
+        );
+
         return (
             <div className="main-page">
-                <Header>
-                    <span><h1>{this.props.header}</h1></span>
-                    <Checkbox>Show active</Checkbox>
-                    <Search />
-                </Header>
-                <Progress />
+                <Progress isVisible={this.props.isProgressVisible}/>
                 <Body>
-                    <Categories>
-                        <CategoryAddButton addCategory={this._addCategory.bind(this)}/>
-                        <CategoriesList categories={this.props.categories}
-                                        isMain={true}
-                                        showSubtasks={this._showSubtasks.bind(this)}/>
-                    </Categories>
-                    <Todos categories={this.props.categories} categoryId={this.state.category}/>
+                <Categories>
+
+                    {this.props.isTodoList
+                        ? <CategoryAddButton addCategory={this._addCategory}/>
+                        : null}
+
+                    <CategoriesList categories={this.props.categories}
+                                    isTodoList={this.props.isTodoList}
+                                    showSubtasks={this._showSubtasks}/>
+                </Categories>
+
+                {childrenWithProps}
+
                 </Body>
             </div>
-        );
-    }
-}
-
-
-class Search extends React.Component {
-    render() {
-        return (
-            <FormGroup>
-                <FormControl type="text" placeholder="Search"/>
-                <FormControl.Feedback>
-                    <Glyphicon glyph="remove"/>
-                </FormControl.Feedback>
-            </FormGroup>
         );
     }
 }
@@ -65,9 +66,11 @@ class Search extends React.Component {
 class Progress extends React.Component {
     render() {
         return (
-            <div className="todo-progress">
-                <ProgressBar bsStyle="success" now={60} label={`${60}%`}/>
-            </div>
+            this.props.isVisible ?
+                <div className="todo-progress">
+                    <ProgressBar bsStyle="success" now={60} label={`${60}%`}/>
+                </div>
+                : null
         );
     }
 }

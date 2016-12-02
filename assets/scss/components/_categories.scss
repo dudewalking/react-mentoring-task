@@ -19,14 +19,9 @@
   background-color: ghostwhite;
 }
 
-.category-item-selected{
+.category-item-selected {
   display: flex;
-  padding: 4px 5px 2px 20px;
-  border: solid lightgrey 1px;
-}
-
-.category-item-selected > span {
-  color: black;
+  color: #2e6da4;
   font-weight: bold;
 }
 
@@ -51,6 +46,10 @@
   font-size: larger;
   color: #5bc0de;
   cursor: pointer;
+}
+
+.category-text > a {
+  text-decoration: none;
 }
 
 .category-text:hover {

@@ -1,12 +1,17 @@
 "use strict";
 
 import React from "react";
+import Header from "./header.jsx";
 
 export default class AppContainer extends React.Component {
     constructor() {
         super();
         this.state = {
             header: "To-Do List",
+            isSearchVisible: true,
+            isShowActiveVisible: true,
+            isTodoList: true,
+            isProgressVisible: true,
             categories: [
                 {
                     id: 1,
@@ -52,14 +57,23 @@ export default class AppContainer extends React.Component {
     render() {
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                categories: this.state.categories,
                 header: this.state.header,
-                addCategory: this.addCategory.bind(this)
+                isTodoList: this.state.isTodoList,
+                isProgressVisible: this.state.isProgressVisible,
+                categories: this.state.categories,
+                addCategory: this.addCategory,
+                addTodo: this.addTodo,
             })
         );
 
+
+        console.log(this.state.isTodoList);
+
         return (
             <div className="app-container">
+                <Header name={this.state.header}
+                        isSearch={this.state.isSearchVisible}
+                        isShowActive={this.state.isShowActiveVisible}/>
                 {childrenWithProps}
             </div>
         );
@@ -80,7 +94,7 @@ export default class AppContainer extends React.Component {
         });
     }
 
-    addTodo() {
+    addTodo(categoryId, name) {
 
     }
 }
