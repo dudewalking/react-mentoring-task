@@ -1,14 +1,14 @@
 $header-height: 40px;
 
 .container-header > .form-group, .checkbox, .h3 {
-  margin:0;
+  margin: 0;
 }
 
 .container-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 25px;
+  margin: 25px 0;
   width: 100%;
   height: $header-height;
 }

@@ -6,7 +6,6 @@ import {Button, FormControl, FormGroup, Checkbox} from "react-bootstrap";
 
 
 export default class TodoInfo extends React.Component {
-
     render() {
         const taskId = this.props.params.id[1];
         let todo = null;
@@ -18,8 +17,8 @@ export default class TodoInfo extends React.Component {
         });
 
         return (
-            <div className="task">
-                <div className="task-btns">
+            <div className="todo">
+                <div className="todo-btns">
                     <SaveChanges />
                     <span> </span>
                     <Cancel />
@@ -53,7 +52,7 @@ class Cancel extends React.Component {
 class EditName extends React.Component {
     render() {
         return (
-            <FormGroup className="edit-task-name">
+            <FormGroup className="todo-edit-name">
                 <FormControl type="text" placeholder={this.props.name}/>
             </FormGroup>
         );
@@ -63,7 +62,7 @@ class EditName extends React.Component {
 class Status extends React.Component {
     render() {
         return (
-            <Checkbox className="task-status" checked={this.props.status} readOnly>Done</Checkbox>
+            <Checkbox className="todo-status" checked={this.props.status} readOnly>Done</Checkbox>
         );
     }
 }

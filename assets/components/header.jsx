@@ -9,11 +9,11 @@ export default class Header extends React.Component {
             <div className="container-header">
                 <span><h1>{this.props.name}</h1></span>
 
-                {this.props.isShowActive
+                {this.props.isTodoList
                     ? <Checkbox>Show active</Checkbox>
                     : null}
 
-                {this.props.isSearch
+                {this.props.isTodoList
                     ? <Search />
                     : null}
 

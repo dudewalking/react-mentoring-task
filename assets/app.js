@@ -13,8 +13,8 @@ ReactDOM.render(
         <Route path="/" component={AppContainer}>
             <IndexRedirect to="category/0"/>
             <Route path="category/:id" component={MainPage}>
-                <IndexRoute component={Todos}/>
-                <Route path="todo/:id" component={TodoInfo}/>
+                <IndexRoute component={Todos} isTodoList={true} handler={AppContainer}/>
+                <Route path="todo/:id" component={TodoInfo} isTodoList={false} handler={AppContainer}/>
             </Route>
         </Route>
     </Router>,

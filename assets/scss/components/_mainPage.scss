@@ -1,8 +1,7 @@
 
-.main-page{
-  height: calc(100vh - 180px);
+.main-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 90px);
 }
 
-.todo-progress {
-  margin-top: 20px;
-}

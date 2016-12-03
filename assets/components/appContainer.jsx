@@ -4,14 +4,10 @@ import React from "react";
 import Header from "./header.jsx";
 
 export default class AppContainer extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             header: "To-Do List",
-            isSearchVisible: true,
-            isShowActiveVisible: true,
-            isTodoList: true,
-            isProgressVisible: true,
             categories: [
                 {
                     id: 1,
@@ -55,25 +51,22 @@ export default class AppContainer extends React.Component {
     }
 
     render() {
+        console.log(this.props.routes[2]);
+
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                header: this.state.header,
-                isTodoList: this.state.isTodoList,
-                isProgressVisible: this.state.isProgressVisible,
-                categories: this.state.categories,
-                addCategory: this.addCategory,
                 addTodo: this.addTodo,
+                addCategory: this.addCategory,
+                change: this.change,
+                categories: this.state.categories,
+                header: this.state.header,
+                isTodoList: this.props.routes[2].isTodoList,
             })
         );
 
-
-        console.log(this.state.isTodoList);
-
         return (
             <div className="app-container">
-                <Header name={this.state.header}
-                        isSearch={this.state.isSearchVisible}
-                        isShowActive={this.state.isShowActiveVisible}/>
+                <Header name={this.state.header} isTodoList={ this.props.routes[2].isTodoList}/>
                 {childrenWithProps}
             </div>
         );
@@ -97,6 +90,13 @@ export default class AppContainer extends React.Component {
     addTodo(categoryId, name) {
 
     }
+
+    changeView(){
+        this.setState({
+            isTodoList: this.props.routes[2].isTodoList
+        });
+    }
+
 }
 
 

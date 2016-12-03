@@ -10,13 +10,13 @@ export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: props.categories[props.params.id[0]],
+            category: props.categories[props.params.id[0]]
         };
         this._addCategory = this._addCategory.bind(this);
-        this._showSubtasks = this._showSubtasks.bind(this);
+        this._showTodos = this._showTodos.bind(this);
     }
 
-    _showSubtasks(category) {
+    _showTodos(category) {
         this.props.categories.filter(item => {
             if (item.id === category.id) {
                 this.setState({category: category});
@@ -33,16 +33,15 @@ export default class MainPage extends React.Component {
     }
 
     render() {
-
-        const childrenWithProps = React.Children.map(this.props.children,
+        const children = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                category: this.state.category,
+                category: this.state.category
             })
         );
 
         return (
             <div className="main-page">
-                <Progress isVisible={this.props.isProgressVisible}/>
+                <Progress isVisible={this.props.isTodoList}/>
                 <Body>
                 <Categories>
 
@@ -52,10 +51,10 @@ export default class MainPage extends React.Component {
 
                     <CategoriesList categories={this.props.categories}
                                     isTodoList={this.props.isTodoList}
-                                    showSubtasks={this._showSubtasks}/>
+                                    showSubtasks={this._showTodos}/>
                 </Categories>
 
-                {childrenWithProps}
+                {children}
 
                 </Body>
             </div>

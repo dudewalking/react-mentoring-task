@@ -16,9 +16,9 @@ export default class Todos extends React.Component {
         }
 
         return (
-            <div className="tasks">
+            <div className="todos">
                 <AddTodo />
-                <div className="tasks-list">
+                <div className="todos-list">
                     <ul>
                         {todos}
                     </ul>
@@ -37,7 +37,7 @@ class AddTodo extends React.Component {
 
     render() {
         return (
-            <FormGroup className="task-input">
+            <FormGroup className="todos-input">
                 <InputGroup>
                     <FormControl type="text" placeholder="Text input with button"/>
                     <InputGroup.Button>
@@ -58,9 +58,9 @@ class AddTodo extends React.Component {
 class Todo extends React.Component {
     render() {
         return (
-            <li className="tasks-item">
+            <li className="todos-item">
                 <Checkbox>
-                    <span className="task-text">{this.props.todo.name}</span>
+                    <span className="todos-item-text">{this.props.todo.name}</span>
                 </Checkbox>
                 <Link to={`category/${this.props.categoryId - 1}/todo/${this.props.todo.id}`}>
                     <Glyphicon glyph="edit" style={{cursor: "pointer"}}/>

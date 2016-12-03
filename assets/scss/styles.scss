@@ -4,12 +4,11 @@
 @import "components/body";
 @import "components/header";
 @import "components/categories";
-@import "components/task";
-@import "components/tasks";
+@import "components/todoInfo";
+@import "components/todos";
 @import "components/mainPage";
-@import "components/todoPage";
 
-html, body, .app {
+html, body{
   height: 100%;
 }
 
@@ -17,6 +16,7 @@ html, body, .app {
   display: flex;
   justify-content: center;
   min-width: 1000px;
+  min-height: 100%;
 }
 
 .form-control {

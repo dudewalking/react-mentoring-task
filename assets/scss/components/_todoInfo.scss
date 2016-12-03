@@ -1,27 +1,27 @@
-.task {
+.todo {
   display: flex;
   flex-direction: column;
   width: 60%;
-  margin-right: 50px;
+  margin-right: 25px;
 }
 
-.task {
+.todo {
   textarea{
     height: 300px;
     resize: none;
   }
 }
 
-.task-btns {
+.todo-btns {
   align-self: flex-end;
   margin-bottom: 25px;
 }
 
-.edit-task-name {
+.todo-edit-name {
   width: 35%;
   margin-bottom: 20px;
 }
 
-.task-status {
+.todo-status {
   margin-bottom: 20px;
 }

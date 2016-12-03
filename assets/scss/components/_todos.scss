@@ -1,41 +1,43 @@
 
-.tasks {
+.todos {
+  display: flex;
+  flex-direction: column;
   width: 60%;
 }
 
-.tasks-list {
+.todos-list {
   width: 100%;
-  height: 100%;
+  flex: 1;
   overflow-y: scroll;
 }
 
-.tasks-list > ul {
+.todos-list > ul {
   margin-right: 20px;
 }
 
-.tasks-item {
+.todos-item {
   display: flex;
   border: solid lightgrey 1px;
   align-items: center;
   padding: 30px;
 }
 
-.tasks-item > a {
+.todos-item > a {
   margin-left: auto;
   padding: 10px;
   color: black;
 }
 
-.tasks-item > .checkbox input[type="checkbox"]   {
+.todos-item > .checkbox input[type="checkbox"]   {
   position: relative;
 }
 
-.task-text {
+.todos-item-text {
   font-size: 24px;
   margin-left: 15px;
 }
 
-.task-input {
+.todos-input {
   width: 50%;
   margin-left: auto;
   margin-right: 35px;

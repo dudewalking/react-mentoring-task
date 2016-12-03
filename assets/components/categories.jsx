@@ -100,11 +100,11 @@ class Category extends React.Component {
                     ? <Glyphicon glyph="menu-down" className="category-expand-arrow"/>
                     : null}
 
-                <span className="category-text" onClick={this._showSubtasks}>
+                <div className="category-text" onClick={this._showSubtasks}>
                     <Link to={`category/${this.props.category.id-1}`} activeClassName="category-item-selected">
                         {this.props.category.name}
                     </Link>
-                </span>
+                </div>
 
                 {this.props.isTodoList
                     ? <TodoListTools />
