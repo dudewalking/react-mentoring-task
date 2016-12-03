@@ -51,8 +51,6 @@ export default class AppContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props.routes[2]);
-
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
                 addTodo: this.addTodo,
@@ -90,13 +88,6 @@ export default class AppContainer extends React.Component {
     addTodo(categoryId, name) {
 
     }
-
-    changeView(){
-        this.setState({
-            isTodoList: this.props.routes[2].isTodoList
-        });
-    }
-
 }
 
 
