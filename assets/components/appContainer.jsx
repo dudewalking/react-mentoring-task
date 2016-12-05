@@ -7,6 +7,7 @@ export default class AppContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            counter: 10,
             header: "To-Do List",
             categories: [
                 {
@@ -96,7 +97,7 @@ export default class AppContainer extends React.Component {
         updatedCategories.forEach((cat) => {
             if(cat.id === category.id){
                 cat.todos.push({
-                    id: this.state.categories.length + 10, //todo create db
+                    id: this.state.counter++, //todo create db
                     name: name,
                     isDone: false
                 });
@@ -104,7 +105,8 @@ export default class AppContainer extends React.Component {
         });
 
         this.setState({
-            categories: updatedCategories
+            categories: updatedCategories,
+            counter: this.state.counter++
         });
     }
 
