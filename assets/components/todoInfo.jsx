@@ -1,30 +1,69 @@
 "use strict";
 
 import React from "react";
-import {Link} from "react-router";
+import {browserHistory} from "react-router";
 import {Button, FormControl, FormGroup, Checkbox} from "react-bootstrap";
 
 
 export default class TodoInfo extends React.Component {
-    render() {
-        const taskId = this.props.params.id[1];
-        let todo = null;
 
-        this.props.category.todos.map(task => {
-            if (task.id == taskId) {
-                todo = task;
+    constructor(props) {
+        super(props);
+        this.state = {
+            currentTodo: {},
+            todoStatus: false
+        };
+    }
+
+    componentWillMount(){
+        let currentTodo = {};
+
+        this.props.category.todos.forEach((todo) => {
+            if (todo.id == this.props.params.id[1]) {
+                console.log(currentTodo);
+                console.log(todo);
+                currentTodo = todo;
             }
         });
+
+        this.setState({
+            currentTodo: currentTodo,
+            todoStatus: currentTodo.isDone
+        });
+    }
+
+    _toggleTodoStatus() {
+
+        let updatedTodo = this.state.currentTodo;
+        let updatedTodoStatus = !this.state.todoStatus;
+
+        updatedTodo.isDone = updatedTodoStatus;
+
+        this.setState({
+            currentTodo: updatedTodo,
+            todoStatus: updatedTodoStatus
+        });
+    }
+
+    _saveChanges() {
+        this.props.toggleTodoStatus(this.state.currentTodo);
+    }
+
+    render() {
 
         return (
             <div className="todo">
                 <div className="todo-btns">
-                    <SaveChanges />
+                    <SaveChanges saveChanges={this._saveChanges.bind(this)}/>
                     <span> </span>
                     <Cancel />
                 </div>
-                <EditName name={todo.name}/>
-                <Status status={todo.isDone}/>
+
+                <EditName name={this.state.currentTodo.name}/>
+
+                <Status status={this.state.todoStatus}
+                        toggleTodoStatus={this._toggleTodoStatus.bind(this)}/>
+
                 <Description />
             </div>
         );
@@ -32,9 +71,20 @@ export default class TodoInfo extends React.Component {
 }
 
 class SaveChanges extends React.Component {
+
+    constructor() {
+        super();
+        this._saveChanges = this._saveChanges.bind(this);
+    }
+
+    _saveChanges() {
+        this.props.saveChanges();
+    }
+
     render() {
         return (
-            <Button bsStyle="danger">Save changes</Button>
+            <Button bsStyle="danger"
+                    onClick={this._saveChanges && browserHistory.goBack}>Save changes</Button>
         );
     }
 }
@@ -42,9 +92,7 @@ class SaveChanges extends React.Component {
 class Cancel extends React.Component {
     render() {
         return (
-            <Link to="/">
-                <Button>Cancel</Button>
-            </Link>
+            <Button onClick={browserHistory.goBack}>Cancel</Button>
         );
     }
 }
@@ -60,9 +108,21 @@ class EditName extends React.Component {
 }
 
 class Status extends React.Component {
+
+    constructor() {
+        super();
+        this._toggleTodoStatus = this._toggleTodoStatus.bind(this);
+    }
+
+    _toggleTodoStatus() {
+        this.props.toggleTodoStatus();
+    }
+
     render() {
         return (
-            <Checkbox className="todo-status" checked={this.props.status} readOnly>Done</Checkbox>
+            <Checkbox className="todo-status"
+                      checked={this.props.status}
+                      onChange={this._toggleTodoStatus}>Done</Checkbox>
         );
     }
 }

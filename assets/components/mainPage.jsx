@@ -10,10 +10,27 @@ export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: props.categories[props.params.id[0]]
+            category: {}
         };
         this._addCategory = this._addCategory.bind(this);
         this._showTodos = this._showTodos.bind(this);
+        this._toggleTodoStatus = this._toggleTodoStatus.bind(this);
+    }
+
+    componentWillMount() {
+        let currentCategory = {};
+
+        this.props.categories.forEach((cat) => {
+            if (cat.id == this.props.params.id[0]) {
+                currentCategory = cat;
+            }
+        });
+
+        this.setState({category: currentCategory});
+    }
+
+    _toggleTodoStatus(todo) {
+        this.props.toggleTodoStatus(todo);
     }
 
     _showTodos(category) {
@@ -35,7 +52,8 @@ export default class MainPage extends React.Component {
     render() {
         const children = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                category: this.state.category
+                category: this.state.category,
+                toggleTodoStatus: this._toggleTodoStatus
             })
         );
 

@@ -61,7 +61,7 @@ export class CategoryAddButton extends React.Component {
 
     render() {
         return (
-            <FormGroup className="category-input">
+            <FormGroup className="category-input" >
                 <InputGroup>
                     <input className="form-control"
                            type="text"
@@ -101,7 +101,7 @@ class Category extends React.Component {
                     : null}
 
                 <div className="category-text" onClick={this._showSubtasks}>
-                    <Link to={`category/${this.props.category.id-1}`} activeClassName="category-item-selected">
+                    <Link to={`category/${this.props.category.id}`} activeClassName="category-item-selected">
                         {this.props.category.name}
                     </Link>
                 </div>

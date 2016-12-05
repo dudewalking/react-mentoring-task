@@ -6,12 +6,25 @@ import {FormGroup, InputGroup, FormControl, Checkbox, Button, Glyphicon} from "r
 
 
 export default class Todos extends React.Component {
+
+    constructor(){
+        super();
+        this._toggleTodoStatus = this._toggleTodoStatus.bind(this);
+    }
+
+    _toggleTodoStatus(todo){
+        this.props.toggleTodoStatus(todo);
+    }
+
     render() {
         let todos = [];
 
         if (this.props.category) {
             this.props.category.todos.forEach(todo => {
-                todos.push(<Todo categoryId={this.props.category.id} todo={todo} key={todo.id}/>);
+                todos.push(<Todo categoryId={this.props.category.id}
+                                 todo={todo}
+                                 key={todo.id}
+                                 toggleTodoStatus={this._toggleTodoStatus}/>);
             });
         }
 
@@ -56,13 +69,23 @@ class AddTodo extends React.Component {
 }
 
 class Todo extends React.Component {
+
+    constructor() {
+        super();
+        this._toggleTodoStatus = this._toggleTodoStatus.bind(this);
+    }
+
+    _toggleTodoStatus() {
+        this.props.toggleTodoStatus(this.props.todo);
+    }
+
     render() {
         return (
             <li className="todos-item">
-                <Checkbox>
+                <Checkbox checked={this.props.todo.isDone} onChange={this._toggleTodoStatus}>
                     <span className="todos-item-text">{this.props.todo.name}</span>
                 </Checkbox>
-                <Link to={`category/${this.props.categoryId - 1}/todo/${this.props.todo.id}`}>
+                <Link to={`category/${this.props.categoryId}/todo/${this.props.todo.id}`}>
                     <Glyphicon glyph="edit" style={{cursor: "pointer"}}/>
                 </Link>
             </li>

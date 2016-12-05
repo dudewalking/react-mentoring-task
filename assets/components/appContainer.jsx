@@ -48,6 +48,7 @@ export default class AppContainer extends React.Component {
         };
         this.addCategory = this.addCategory.bind(this);
         this.addTodo = this.addTodo.bind(this);
+        this.toggleTodoStatus = this.toggleTodoStatus.bind(this);
     }
 
     render() {
@@ -55,6 +56,7 @@ export default class AppContainer extends React.Component {
             (child) => React.cloneElement(child, {
                 addTodo: this.addTodo,
                 addCategory: this.addCategory,
+                toggleTodoStatus: this.toggleTodoStatus,
                 change: this.change,
                 categories: this.state.categories,
                 header: this.state.header,
@@ -87,6 +89,22 @@ export default class AppContainer extends React.Component {
 
     addTodo(categoryId, name) {
 
+    }
+
+    toggleTodoStatus(todo) {
+        const updatedCategories = [...this.state.categories];
+
+        updatedCategories.forEach((category) => {
+            category.todos.map((task) => {
+                if(task.id === todo.id){
+                    task.isDone = !task.isDone;
+                }
+            });
+        });
+
+        this.setState({
+            categories: updatedCategories
+        });
     }
 }
 
