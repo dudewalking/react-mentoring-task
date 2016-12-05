@@ -14,23 +14,33 @@ export default class MainPage extends React.Component {
         };
         this._addCategory = this._addCategory.bind(this);
         this._showTodos = this._showTodos.bind(this);
-        this._toggleTodoStatus = this._toggleTodoStatus.bind(this);
+        this._changeTodoStatus = this._changeTodoStatus.bind(this);
+        this._changeHeader = this._changeHeader.bind(this);
+        this._updateTodo = this._updateTodo.bind(this);
     }
 
     componentWillMount() {
         let currentCategory = {};
 
-        this.props.categories.forEach((cat) => {
-            if (cat.id == this.props.params.id[0]) {
-                currentCategory = cat;
+        this.props.categories.forEach((category) => {
+            if (category.id == this.props.params.id[0]) {
+                currentCategory = category;
             }
         });
 
         this.setState({category: currentCategory});
     }
 
-    _toggleTodoStatus(todo) {
-        this.props.toggleTodoStatus(todo);
+    _updateTodo(todo){
+        this.props.updateTodo(todo);
+    }
+
+    _changeTodoStatus(todo) {
+        this.props.changeTodoStatus(todo);
+    }
+
+    _changeHeader(title) {
+        this.props.changeHeader(title);
     }
 
     _showTodos(category) {
@@ -53,7 +63,9 @@ export default class MainPage extends React.Component {
         const children = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
                 category: this.state.category,
-                toggleTodoStatus: this._toggleTodoStatus
+                changeTodoStatus: this._changeTodoStatus,
+                changeHeader: this._changeHeader,
+                updateTodo: this._updateTodo
             })
         );
 

@@ -9,11 +9,16 @@ export default class Todos extends React.Component {
 
     constructor(){
         super();
-        this._toggleTodoStatus = this._toggleTodoStatus.bind(this);
+        this._changeTodoStatus = this._changeTodoStatus.bind(this);
+        this._changeHeader= this._changeHeader.bind(this);
     }
 
-    _toggleTodoStatus(todo){
-        this.props.toggleTodoStatus(todo);
+    _changeTodoStatus(todo){
+        this.props.changeTodoStatus(todo);
+    }
+
+    _changeHeader(title) {
+        this.props.changeHeader(title);
     }
 
     render() {
@@ -24,7 +29,8 @@ export default class Todos extends React.Component {
                 todos.push(<Todo categoryId={this.props.category.id}
                                  todo={todo}
                                  key={todo.id}
-                                 toggleTodoStatus={this._toggleTodoStatus}/>);
+                                 changeTodoStatus={this._changeTodoStatus}
+                                 changeHeader={this._changeHeader}/>);
             });
         }
 
@@ -72,20 +78,30 @@ class Todo extends React.Component {
 
     constructor() {
         super();
-        this._toggleTodoStatus = this._toggleTodoStatus.bind(this);
+        this._changeTodoStatus = this._changeTodoStatus.bind(this);
+        this._changeHeader = this._changeHeader.bind(this);
     }
 
-    _toggleTodoStatus() {
-        this.props.toggleTodoStatus(this.props.todo);
+    _changeTodoStatus() {
+        this.props.changeTodoStatus(this.props.todo);
+    }
+
+    _changeHeader() {
+        this.props.changeHeader(this.props.todo.name);
     }
 
     render() {
         return (
             <li className="todos-item">
-                <Checkbox checked={this.props.todo.isDone} onChange={this._toggleTodoStatus}>
+                <Checkbox checked={this.props.todo.isDone}
+                          onChange={this._changeTodoStatus}>
+
                     <span className="todos-item-text">{this.props.todo.name}</span>
                 </Checkbox>
-                <Link to={`category/${this.props.categoryId}/todo/${this.props.todo.id}`}>
+
+                <Link to={`category/${this.props.categoryId}/todo/${this.props.todo.id}`}
+                      onClick={this._changeHeader}>
+
                     <Glyphicon glyph="edit" style={{cursor: "pointer"}}/>
                 </Link>
             </li>

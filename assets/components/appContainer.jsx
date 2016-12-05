@@ -48,19 +48,22 @@ export default class AppContainer extends React.Component {
         };
         this.addCategory = this.addCategory.bind(this);
         this.addTodo = this.addTodo.bind(this);
-        this.toggleTodoStatus = this.toggleTodoStatus.bind(this);
+        this.changeTodoStatus = this.changeTodoStatus.bind(this);
+        this.changeHeader = this.changeHeader.bind(this);
+        this.updateTodo = this.updateTodo.bind(this);
     }
 
     render() {
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                addTodo: this.addTodo,
-                addCategory: this.addCategory,
-                toggleTodoStatus: this.toggleTodoStatus,
-                change: this.change,
-                categories: this.state.categories,
                 header: this.state.header,
+                categories: this.state.categories,
                 isTodoList: this.props.routes[2].isTodoList,
+                addTodo: this.addTodo,
+                updateTodo: this.updateTodo,
+                addCategory: this.addCategory,
+                changeHeader: this.changeHeader,
+                changeTodoStatus: this.changeTodoStatus,
             })
         );
 
@@ -91,7 +94,29 @@ export default class AppContainer extends React.Component {
 
     }
 
-    toggleTodoStatus(todo) {
+    changeHeader(title) {
+        if( this.props.routes[2].isTodoList){
+            this.setState({header: title});
+        }
+    }
+
+    updateTodo(todo) {
+        const updatedCategories = [...this.state.categories];
+
+        updatedCategories.forEach((category) => {
+            category.todos.map((task) => {
+                if(task.id === todo.id){
+                    return todo;
+                }
+            });
+        });
+
+        this.setState({
+            categories: updatedCategories
+        });
+    }
+
+    changeTodoStatus(todo) {
         const updatedCategories = [...this.state.categories];
 
         updatedCategories.forEach((category) => {
