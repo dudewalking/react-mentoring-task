@@ -2,18 +2,23 @@
 
 import React from "react";
 import {Link} from "react-router";
-import {FormGroup, InputGroup, FormControl, Checkbox, Button, Glyphicon} from "react-bootstrap";
+import {FormGroup, InputGroup, Checkbox, Button, Glyphicon} from "react-bootstrap";
 
 
 export default class Todos extends React.Component {
 
-    constructor(){
+    constructor() {
         super();
         this._changeTodoStatus = this._changeTodoStatus.bind(this);
-        this._changeHeader= this._changeHeader.bind(this);
+        this._changeHeader = this._changeHeader.bind(this);
+        this._addTodo = this._addTodo.bind(this);
     }
 
-    _changeTodoStatus(todo){
+    _addTodo(name) {
+        this.props.addTodo(name);
+    }
+
+    _changeTodoStatus(todo) {
         this.props.changeTodoStatus(todo);
     }
 
@@ -36,7 +41,7 @@ export default class Todos extends React.Component {
 
         return (
             <div className="todos">
-                <AddTodo />
+                <AddTodo addTodo={this._addTodo}/>
                 <div className="todos-list">
                     <ul>
                         {todos}
@@ -51,6 +56,7 @@ export default class Todos extends React.Component {
 class AddTodo extends React.Component {
 
     _addTodo(name) {
+        console.log(this.props);
         this.props.addTodo(name);
     }
 
@@ -58,7 +64,10 @@ class AddTodo extends React.Component {
         return (
             <FormGroup className="todos-input">
                 <InputGroup>
-                    <FormControl type="text" placeholder="Text input with button"/>
+                    <input type="text"
+                           className="form-control"
+                           placeholder="Text input with button"
+                           ref={input => this.input = input}/>
                     <InputGroup.Button>
                         <Button bsStyle="danger" onClick={() => {
                             if (this.input.value) {

@@ -13,6 +13,7 @@ export default class MainPage extends React.Component {
             category: {}
         };
         this._addCategory = this._addCategory.bind(this);
+        this._addTodo = this._addTodo.bind(this);
         this._showTodos = this._showTodos.bind(this);
         this._changeTodoStatus = this._changeTodoStatus.bind(this);
         this._changeHeader = this._changeHeader.bind(this);
@@ -65,7 +66,8 @@ export default class MainPage extends React.Component {
                 category: this.state.category,
                 changeTodoStatus: this._changeTodoStatus,
                 changeHeader: this._changeHeader,
-                updateTodo: this._updateTodo
+                updateTodo: this._updateTodo,
+                addTodo: this._addTodo,
             })
         );
 

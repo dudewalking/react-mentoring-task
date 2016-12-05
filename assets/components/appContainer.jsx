@@ -90,8 +90,22 @@ export default class AppContainer extends React.Component {
         });
     }
 
-    addTodo(categoryId, name) {
+    addTodo(category, name) {
+        const updatedCategories = [...this.state.categories];
 
+        updatedCategories.forEach((cat) => {
+            if(cat.id === category.id){
+                cat.todos.push({
+                    id: this.state.categories.length + 10, //todo create db
+                    name: name,
+                    isDone: false
+                });
+            }
+        });
+
+        this.setState({
+            categories: updatedCategories
+        });
     }
 
     changeHeader(title) {
