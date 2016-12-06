@@ -64,7 +64,8 @@ class AddTodoButton extends React.Component {
                     <input type="text"
                            className="form-control"
                            placeholder="Text input with button"
-                           ref={input => this.input = input}/>
+                           ref={input => this.input = input}
+                           maxLength="50"/>
                     <InputGroup.Button>
                         <Button bsStyle="danger" onClick={() => {
                             if (this.input.value) {

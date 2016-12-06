@@ -45,7 +45,8 @@ export class CategoryAddButton extends React.Component {
                     <input className="form-control"
                            type="text"
                            placeholder="Enter category title"
-                           ref={input => this.input = input}/>
+                           ref={input => this.input = input}
+                           maxLength="30"/>
                     <InputGroup.Button>
                         <Button bsStyle="danger" onClick={() => {
                             if (this.input.value) {
