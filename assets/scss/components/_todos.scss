@@ -28,13 +28,18 @@
   color: black;
 }
 
-.todos-item > .checkbox input[type="checkbox"]   {
+.todos-item > .checkbox input[type="checkbox"] {
   position: relative;
 }
 
-.todos-item-text {
+.todos-item-done,
+.todos-item-def{
   font-size: 24px;
   margin-left: 15px;
+}
+
+.todos-item-done{
+  text-decoration: line-through;
 }
 
 .todos-input {

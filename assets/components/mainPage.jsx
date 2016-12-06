@@ -10,29 +10,15 @@ export default class MainPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: {}
+            categoryId: props.params.id[0]
         };
         this._addCategory = this._addCategory.bind(this);
         this._addTodo = this._addTodo.bind(this);
-        this._showTodos = this._showTodos.bind(this);
         this._changeTodoStatus = this._changeTodoStatus.bind(this);
-        this._changeHeader = this._changeHeader.bind(this);
         this._updateTodo = this._updateTodo.bind(this);
     }
 
-    componentWillMount() {
-        let currentCategory = {};
-
-        this.props.categories.forEach((category) => {
-            if (category.id == this.props.params.id[0]) {
-                currentCategory = category;
-            }
-        });
-
-        this.setState({category: currentCategory});
-    }
-
-    _updateTodo(todo){
+    _updateTodo(todo) {
         this.props.updateTodo(todo);
     }
 
@@ -40,32 +26,22 @@ export default class MainPage extends React.Component {
         this.props.changeTodoStatus(todo);
     }
 
-    _changeHeader(title) {
-        this.props.changeHeader(title);
-    }
-
-    _showTodos(category) {
-        this.props.categories.filter(item => {
-            if (item.id === category.id) {
-                this.setState({category: category});
-            }
-        });
-    }
-
     _addCategory(name) {
         this.props.addCategory(name);
     }
 
-    _addTodo(name) {
-        this.props.addTodo(this.state.category, name);
+    _addTodo(categoryId, name) {
+        this.props.addTodo(categoryId, name);
     }
 
     render() {
+
         const children = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                category: this.state.category,
+                categories: this.props.categories,
+                categoryId: this.props.params.id[0],
+                todoId: this.props.params.id[1],
                 changeTodoStatus: this._changeTodoStatus,
-                changeHeader: this._changeHeader,
                 updateTodo: this._updateTodo,
                 addTodo: this._addTodo,
             })
@@ -82,8 +58,7 @@ export default class MainPage extends React.Component {
                         : null}
 
                     <CategoriesList categories={this.props.categories}
-                                    isTodoList={this.props.isTodoList}
-                                    showSubtasks={this._showTodos}/>
+                                    isTodoList={this.props.isTodoList}/>
                 </Categories>
 
                 {children}

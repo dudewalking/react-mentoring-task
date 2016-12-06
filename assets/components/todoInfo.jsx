@@ -1,14 +1,14 @@
 "use strict";
 
 import React from "react";
-import {browserHistory} from "react-router";
+import {Link} from "react-router";
 import {Button, FormControl, FormGroup, Checkbox} from "react-bootstrap";
 
 
 export default class TodoInfo extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             currentTodo: {},
             todoStatus: false,
@@ -23,10 +23,33 @@ export default class TodoInfo extends React.Component {
 
     componentWillMount() {
         let currentTodo = {};
+        this.props.categories.forEach((cat) => {
+            if (cat.id == this.props.categoryId) {
+                cat.todos.forEach(todo => {
+                    if (todo.id == this.props.todoId) {
+                        currentTodo = todo;
+                    }
+                });
+            }
+        });
 
-        this.props.category.todos.forEach((todo) => {
-            if (todo.id == this.props.params.id[1]) {
-                currentTodo = todo;
+        this.setState({
+            currentTodo: currentTodo,
+            todoStatus: currentTodo.isDone,
+            todoName: currentTodo.name,
+            todoDescription: currentTodo.description
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let currentTodo = {};
+        this.props.categories.forEach((cat) => {
+            if (cat.id == nextProps.categoryId) {
+                cat.todos.forEach(todo => {
+                    if (todo.id == nextProps.todoId) {
+                        currentTodo = todo;
+                    }
+                });
             }
         });
 
@@ -61,13 +84,13 @@ export default class TodoInfo extends React.Component {
     }
 
     render() {
-
         return (
             <div className="todo">
                 <div className="todo-btns">
-                    <SaveChanges saveChanges={this._saveChanges}/>
+                    <SaveChanges saveChanges={this._saveChanges}
+                                 categoryId={this.props.categoryId}/>
                     <span> </span>
-                    <Cancel />
+                    <Cancel categoryId={this.props.categoryId}/>
                 </div>
 
                 <EditName name={this.state.currentTodo.name}
@@ -96,11 +119,10 @@ class SaveChanges extends React.Component {
 
     render() {
         return (
-            <Button bsStyle="danger"
-                    onClick={() => {
-                        this._saveChanges();
-                        browserHistory.goBack();
-                    }}>Save changes</Button>
+            <Link to={`category/${this.props.categoryId}`}>
+                <Button bsStyle="danger"
+                        onClick={this._saveChanges}>Save changes</Button>
+            </Link>
         );
     }
 }
@@ -108,7 +130,9 @@ class SaveChanges extends React.Component {
 class Cancel extends React.Component {
     render() {
         return (
-            <Button onClick={browserHistory.goBack}>Cancel</Button>
+            <Link to={`category/${this.props.categoryId}`}>
+                <Button>Cancel</Button>
+            </Link>
         );
     }
 }

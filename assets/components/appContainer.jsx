@@ -8,7 +8,6 @@ export default class AppContainer extends React.Component {
         super(props);
         this.state = {
             counter: 10,
-            header: "To-Do List",
             categories: [
                 {
                     id: 1,
@@ -50,27 +49,25 @@ export default class AppContainer extends React.Component {
         this.addCategory = this.addCategory.bind(this);
         this.addTodo = this.addTodo.bind(this);
         this.changeTodoStatus = this.changeTodoStatus.bind(this);
-        this.changeHeader = this.changeHeader.bind(this);
+        this.showHeader = this.showHeader.bind(this);
         this.updateTodo = this.updateTodo.bind(this);
     }
 
     render() {
         const childrenWithProps = React.Children.map(this.props.children,
             (child) => React.cloneElement(child, {
-                header: this.state.header,
                 categories: this.state.categories,
                 isTodoList: this.props.routes[2].isTodoList,
                 addTodo: this.addTodo,
                 updateTodo: this.updateTodo,
                 addCategory: this.addCategory,
-                changeHeader: this.changeHeader,
                 changeTodoStatus: this.changeTodoStatus,
             })
         );
 
         return (
             <div className="app-container">
-                <Header name={this.state.header} isTodoList={ this.props.routes[2].isTodoList}/>
+                <Header name={this.showHeader()} isTodoList={ this.props.routes[2].isTodoList}/>
                 {childrenWithProps}
             </div>
         );
@@ -91,11 +88,11 @@ export default class AppContainer extends React.Component {
         });
     }
 
-    addTodo(category, name) {
+    addTodo(categoryId, name) {
         const updatedCategories = [...this.state.categories];
 
         updatedCategories.forEach((cat) => {
-            if(cat.id === category.id){
+            if (cat.id == categoryId) {
                 cat.todos.push({
                     id: this.state.counter++, //todo create db
                     name: name,
@@ -110,10 +107,22 @@ export default class AppContainer extends React.Component {
         });
     }
 
-    changeHeader(title) {
-        if( this.props.routes[2].isTodoList){
-            this.setState({header: title});
+    showHeader() {
+        let changedHeader = "TodoList";
+        if(this.props.params.id[1]){
+            const updatedCategories = [...this.state.categories];
+
+            updatedCategories.forEach((cat) => {
+                if (cat.id == this.props.params.id[0]) {
+                    cat.todos.forEach((todo) => {
+                        if(todo.id == this.props.params.id[1]){
+                            changedHeader = todo.name;
+                        }
+                    });
+                }
+            });
         }
+        return changedHeader;
     }
 
     updateTodo(todo) {
@@ -121,7 +130,7 @@ export default class AppContainer extends React.Component {
 
         updatedCategories.forEach((category) => {
             category.todos.map((task) => {
-                if(task.id === todo.id){
+                if (task.id === todo.id) {
                     return todo;
                 }
             });
@@ -137,7 +146,7 @@ export default class AppContainer extends React.Component {
 
         updatedCategories.forEach((category) => {
             category.todos.map((task) => {
-                if(task.id === todo.id){
+                if (task.id === todo.id) {
                     task.isDone = !task.isDone;
                 }
             });

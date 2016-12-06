@@ -5,11 +5,6 @@ import {Link} from "react-router";
 import {Glyphicon, FormGroup, InputGroup, Button} from "react-bootstrap";
 
 export class Categories extends React.Component {
-
-    _showSubtasks(id) {
-        this.props.showSubtasks(id);
-    }
-
     render() {
         return (
             <div className="categories">
@@ -20,26 +15,10 @@ export class Categories extends React.Component {
 }
 
 export class CategoriesList extends React.Component {
-
-    constructor() {
-        super();
-        this.state = {
-            categoryId: 0
-        };
-        this._showSubtasks = this._showSubtasks.bind(this);
-    }
-
-    _showSubtasks(category) {
-        this.setState({categoryId: category.id});
-        this.props.showSubtasks(category);
-    }
-
     render() {
         const categories = this.props.categories.map((category) => {
-            return <Category isSelected={category.id === this.state.categoryId}
-                             key={category.id}
+            return <Category key={category.id}
                              isTodoList={this.props.isTodoList}
-                             showSubtasks={this._showSubtasks}
                              category={category}/>;
         });
 
@@ -83,16 +62,6 @@ export class CategoryAddButton extends React.Component {
 
 
 class Category extends React.Component {
-
-    constructor() {
-        super();
-        this._showSubtasks = this._showSubtasks.bind(this);
-    }
-
-    _showSubtasks() {
-        this.props.showSubtasks(this.props.category);
-    }
-
     render() {
         return (
             <li className="category-item">
@@ -100,10 +69,9 @@ class Category extends React.Component {
                     ? <Glyphicon glyph="menu-down" className="category-expand-arrow"/>
                     : null}
 
-                <div className="category-text" onClick={this._showSubtasks}>
-                    <Link to={`category/${this.props.category.id}`} activeClassName="category-item-selected">
-                        {this.props.category.name}
-                    </Link>
+                <div className="category-text" >
+                    <Link to={`category/${this.props.category.id}`}
+                          activeClassName="category-item-selected">{this.props.category.name}</Link>
                 </div>
 
                 {this.props.isTodoList

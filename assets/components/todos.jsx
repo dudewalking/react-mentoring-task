@@ -2,7 +2,7 @@
 
 import React from "react";
 import {Link} from "react-router";
-import {FormGroup, InputGroup, Checkbox, Button, Glyphicon} from "react-bootstrap";
+import {Glyphicon, FormGroup, InputGroup, Checkbox, Button} from "react-bootstrap";
 
 
 export default class Todos extends React.Component {
@@ -10,38 +10,36 @@ export default class Todos extends React.Component {
     constructor() {
         super();
         this._changeTodoStatus = this._changeTodoStatus.bind(this);
-        this._changeHeader = this._changeHeader.bind(this);
         this._addTodo = this._addTodo.bind(this);
     }
 
     _addTodo(name) {
-        this.props.addTodo(name);
+        this.props.addTodo(this.props.categoryId, name);
     }
 
     _changeTodoStatus(todo) {
         this.props.changeTodoStatus(todo);
     }
 
-    _changeHeader(title) {
-        this.props.changeHeader(title);
-    }
-
     render() {
         let todos = [];
 
-        if (this.props.category) {
-            this.props.category.todos.forEach(todo => {
-                todos.push(<Todo categoryId={this.props.category.id}
-                                 todo={todo}
-                                 key={todo.id}
-                                 changeTodoStatus={this._changeTodoStatus}
-                                 changeHeader={this._changeHeader}/>);
+        if (this.props.categoryId) {
+            this.props.categories.forEach(category => {
+                if (category.id == this.props.categoryId) {
+                    category.todos.forEach(todo => {
+                        todos.push(<Todo categoryId={this.props.categoryId}
+                                         todo={todo}
+                                         key={todo.id}
+                                         changeTodoStatus={this._changeTodoStatus}/>);
+                    });
+                }
             });
         }
 
         return (
             <div className="todos">
-                <AddTodo addTodo={this._addTodo}/>
+                <AddTodoButton addTodo={this._addTodo}/>
                 <div className="todos-list">
                     <ul>
                         {todos}
@@ -53,10 +51,9 @@ export default class Todos extends React.Component {
 }
 
 
-class AddTodo extends React.Component {
+class AddTodoButton extends React.Component {
 
     _addTodo(name) {
-        console.log(this.props);
         this.props.addTodo(name);
     }
 
@@ -74,8 +71,7 @@ class AddTodo extends React.Component {
                                 this._addTodo(this.input.value);
                                 this.input.value = "";
                             }
-                        }}
-                        >Add</Button>
+                        }}>Add</Button>
                     </InputGroup.Button>
                 </InputGroup>
             </FormGroup>
@@ -88,15 +84,10 @@ class Todo extends React.Component {
     constructor() {
         super();
         this._changeTodoStatus = this._changeTodoStatus.bind(this);
-        this._changeHeader = this._changeHeader.bind(this);
     }
 
     _changeTodoStatus() {
         this.props.changeTodoStatus(this.props.todo);
-    }
-
-    _changeHeader() {
-        this.props.changeHeader(this.props.todo.name);
     }
 
     render() {
@@ -105,11 +96,13 @@ class Todo extends React.Component {
                 <Checkbox checked={this.props.todo.isDone}
                           onChange={this._changeTodoStatus}>
 
-                    <span className="todos-item-text">{this.props.todo.name}</span>
+                    <span className={this.props.todo.isDone
+                        ? "todos-item-done"
+                        : "todos-item-def"}>{this.props.todo.name}</span>
+
                 </Checkbox>
 
-                <Link to={`category/${this.props.categoryId}/todo/${this.props.todo.id}`}
-                      onClick={this._changeHeader}>
+                <Link to={`category/${this.props.categoryId}/todo/${this.props.todo.id}`}>
 
                     <Glyphicon glyph="edit" style={{cursor: "pointer"}}/>
                 </Link>
