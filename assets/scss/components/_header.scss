@@ -23,3 +23,8 @@ $header-height: 40px;
   margin-left: 20px;
   margin-right: 50px;
 }
+
+.container-header-search > .form-control-feedback{
+  pointer-events: visible;
+  cursor: pointer;
+}

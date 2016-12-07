@@ -8,6 +8,7 @@ export default class AppContainer extends React.Component {
         super(props);
         this.state = {
             counter: 10,
+            areActive: false,
             categories: [
                 {
                     id: 1,
@@ -51,6 +52,9 @@ export default class AppContainer extends React.Component {
         this.changeTodoStatus = this.changeTodoStatus.bind(this);
         this.showHeader = this.showHeader.bind(this);
         this.updateTodo = this.updateTodo.bind(this);
+        this.showActiveTodos = this.showActiveTodos.bind(this);
+        this.searchForTodo = this.searchForTodo.bind(this);
+        this.clearSearch = this.clearSearch.bind(this);
     }
 
     render() {
@@ -58,6 +62,7 @@ export default class AppContainer extends React.Component {
             (child) => React.cloneElement(child, {
                 categories: this.state.categories,
                 isTodoList: this.props.routes[2].isTodoList,
+                areActiveTodos: this.state.areActive,
                 addTodo: this.addTodo,
                 updateTodo: this.updateTodo,
                 addCategory: this.addCategory,
@@ -67,7 +72,11 @@ export default class AppContainer extends React.Component {
 
         return (
             <div className="app-container">
-                <Header name={this.showHeader()} isTodoList={ this.props.routes[2].isTodoList}/>
+                <Header name={this.showHeader()}
+                        isTodoList={this.props.routes[2].isTodoList}
+                        showActiveTodos={this.showActiveTodos}
+                        searchForTodo={this.searchForTodo}
+                        clearSearch={this.clearSearch}/>
                 {childrenWithProps}
             </div>
         );
@@ -109,13 +118,13 @@ export default class AppContainer extends React.Component {
 
     showHeader() {
         let changedHeader = "TodoList";
-        if(this.props.params.id[1]){
+        if (this.props.params.id[1]) {
             const updatedCategories = [...this.state.categories];
 
             updatedCategories.forEach((cat) => {
                 if (cat.id == this.props.params.id[0]) {
                     cat.todos.forEach((todo) => {
-                        if(todo.id == this.props.params.id[1]){
+                        if (todo.id == this.props.params.id[1]) {
                             changedHeader = todo.name;
                         }
                     });
@@ -123,6 +132,18 @@ export default class AppContainer extends React.Component {
             });
         }
         return changedHeader;
+    }
+
+    showActiveTodos() {
+        this.setState({areActive: !this.state.areActive});
+    }
+
+    searchForTodo(name) {
+        this.props.router.push({query: {search: name}});
+    }
+
+    clearSearch() {
+        this.props.router.push({query: {search: null}});
     }
 
     updateTodo(todo) {

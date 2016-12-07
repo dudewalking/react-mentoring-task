@@ -41,6 +41,7 @@ export default class MainPage extends React.Component {
                 categories: this.props.categories,
                 categoryId: this.props.params.id[0],
                 todoId: this.props.params.id[1],
+                areActiveTodos: this.props.areActiveTodos,
                 changeTodoStatus: this._changeTodoStatus,
                 updateTodo: this._updateTodo,
                 addTodo: this._addTodo,

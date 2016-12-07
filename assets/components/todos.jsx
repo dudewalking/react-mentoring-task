@@ -26,8 +26,30 @@ export default class Todos extends React.Component {
 
         if (this.props.categoryId) {
             this.props.categories.forEach(category => {
+
                 if (category.id == this.props.categoryId) {
-                    category.todos.forEach(todo => {
+
+                    let actualTodos = category.todos;
+
+                    if (this.props.areActiveTodos) {
+                        actualTodos = category.todos.filter(todo => {
+                            return !todo.isDone;
+                        });
+                    }
+
+                    if (this.props.location.query.search && !this.props.areActiveTodos) {
+                        actualTodos = category.todos.filter(todo => {
+                            return todo.name.toLowerCase().includes(this.props.location.query.search);
+                        });
+                    }
+
+                    if (this.props.location.query.search && this.props.areActiveTodos) {
+                        actualTodos = category.todos.filter(todo => {
+                            return !todo.isDone && todo.name.toLowerCase().includes(this.props.location.query.search);
+                        });
+                    }
+
+                    actualTodos.forEach(todo => {
                         todos.push(<Todo categoryId={this.props.categoryId}
                                          todo={todo}
                                          key={todo.id}
@@ -36,7 +58,6 @@ export default class Todos extends React.Component {
                 }
             });
         }
-
         return (
             <div className="todos">
                 <AddTodoButton addTodo={this._addTodo}/>
