@@ -14,7 +14,9 @@ export default class Todos extends React.Component {
     }
 
     _addTodo(name) {
-        this.props.addTodo(this.props.categoryId, name);
+        if (name) {
+            this.props.addTodo(this.props.params.categoryId, name);
+        }
     }
 
     _changeTodoStatus(todo) {
@@ -24,10 +26,10 @@ export default class Todos extends React.Component {
     render() {
         let todos = [];
 
-        if (this.props.categoryId) {
+        if (this.props.params.categoryId) {
             this.props.categories.forEach(category => {
 
-                if (category.id == this.props.categoryId) {
+                if (category.id == this.props.params.categoryId) {
 
                     let actualTodos = category.todos;
 
@@ -50,7 +52,7 @@ export default class Todos extends React.Component {
                     }
 
                     actualTodos.forEach(todo => {
-                        todos.push(<Todo categoryId={this.props.categoryId}
+                        todos.push(<Todo categoryId={this.props.params.categoryId}
                                          todo={todo}
                                          key={todo.id}
                                          changeTodoStatus={this._changeTodoStatus}/>);
@@ -74,8 +76,30 @@ export default class Todos extends React.Component {
 
 class AddTodoButton extends React.Component {
 
-    _addTodo(name) {
-        this.props.addTodo(name);
+    constructor() {
+        super();
+        this.state = {
+            inputValue: ""
+        };
+        this._addTodo = this._addTodo.bind(this);
+        this._changeValue = this._changeValue.bind(this);
+        this._handleKeyPress = this._handleKeyPress.bind(this);
+    }
+
+    _addTodo() {
+        this.props.addTodo(this.state.inputValue);
+        this.setState({inputValue: ""});
+    }
+
+    _changeValue(e) {
+        this.setState({inputValue: e.target.value});
+    }
+
+    _handleKeyPress(e) {
+        if (e.key === "Enter") {
+            this.props.addTodo(e.target.value);
+            this.setState({inputValue: ""});
+        }
     }
 
     render() {
@@ -85,15 +109,12 @@ class AddTodoButton extends React.Component {
                     <input type="text"
                            className="form-control"
                            placeholder="Text input with button"
-                           ref={input => this.input = input}
+                           value={this.state.inputValue}
+                           onChange={this._changeValue}
+                           onKeyPress={this._handleKeyPress}
                            maxLength="50"/>
                     <InputGroup.Button>
-                        <Button bsStyle="danger" onClick={() => {
-                            if (this.input.value) {
-                                this._addTodo(this.input.value);
-                                this.input.value = "";
-                            }
-                        }}>Add</Button>
+                        <Button bsStyle="danger" onClick={this._addTodo}>Add</Button>
                     </InputGroup.Button>
                 </InputGroup>
             </FormGroup>

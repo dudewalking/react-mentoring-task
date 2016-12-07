@@ -16,9 +16,9 @@ export class Categories extends React.Component {
 
 export class CategoriesList extends React.Component {
     render() {
-        const categories = this.props.categories.map((category) => {
+        const categories = this.props.categories.map(category => {
             return <Category key={category.id}
-                             isTodoList={this.props.isTodoList}
+                             isTodoInfo={this.props.isTodoInfo}
                              category={category}/>;
         });
 
@@ -40,13 +40,14 @@ export class CategoryAddButton extends React.Component {
 
     render() {
         return (
-            <FormGroup className="category-input" >
+            <FormGroup className="category-input">
                 <InputGroup>
                     <input className="form-control"
                            type="text"
                            placeholder="Enter category title"
                            ref={input => this.input = input}
                            maxLength="30"/>
+
                     <InputGroup.Button>
                         <Button bsStyle="danger" onClick={() => {
                             if (this.input.value) {
@@ -55,6 +56,7 @@ export class CategoryAddButton extends React.Component {
                             }
                         }}>Add</Button>
                     </InputGroup.Button>
+
                 </InputGroup>
             </FormGroup>
         );
@@ -63,35 +65,40 @@ export class CategoryAddButton extends React.Component {
 
 
 class Category extends React.Component {
+
     render() {
         return (
             <li className="category-item">
                 {this.props.category.subCategories.length > 0
-                    ? <Glyphicon glyph="menu-down" className="category-expand-arrow"/>
+                    ? <Glyphicon glyph="menu-down"
+                                 className="category-expand-arrow"/>
                     : null}
 
-                <div className="category-text" >
+                <div className="category-text">
                     <Link to={`category/${this.props.category.id}`}
-                          activeClassName="category-item-selected">{this.props.category.name}</Link>
+                          activeClassName="category-item-selected">{this.props.category.name}
+                    </Link>
                 </div>
 
-                {this.props.isTodoList
-                    ? <TodoListTools />
-                    : <TodoTools/>}
+                {this.props.isTodoInfo
+                    ? <TodoTools/>
+                    : <TodoListTools />}
             </li>
         );
     }
 }
 
 class TodoListTools extends React.Component {
+
     render() {
         return (
             <div className="category-tool">
-                <Glyphicon glyph="edit"/>
-                <div className="pull-right">
-                    <Glyphicon glyph="trash"/>
-                    <span>  </span>
-                    <Glyphicon glyph="plus"/>
+                <Glyphicon glyph="edit" style={{cursor: "pointer"}}/>
+                <div className="tools pull-right">
+                    <Glyphicon glyph="trash"
+                               style={{cursor: "pointer"}}/>
+                    <Glyphicon glyph="plus"
+                               style={{cursor: "pointer"}}/>
                 </div>
             </div>
         );
@@ -99,6 +106,7 @@ class TodoListTools extends React.Component {
 }
 
 class TodoTools extends React.Component {
+
     render() {
         return (
             <div className="category-tool">

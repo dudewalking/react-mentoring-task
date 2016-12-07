@@ -12,9 +12,9 @@ ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={AppContainer}>
             <IndexRedirect to="category/1"/>
-            <Route path="category/:id" component={MainPage}>
-                <IndexRoute component={Todos} isTodoList={true}/>
-                <Route path="todo/:id" component={TodoInfo} isTodoList={false}/>
+            <Route path="category/:categoryId" component={MainPage}>
+                <IndexRoute component={Todos}/>
+                <Route path="todo/:todoId" component={TodoInfo}/>
             </Route>
         </Route>
     </Router>,

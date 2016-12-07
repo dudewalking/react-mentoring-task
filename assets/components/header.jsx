@@ -34,12 +34,12 @@ export default class Header extends React.Component {
             <div className="container-header">
                 <span><h1>{this.props.name}</h1></span>
 
-                {this.props.isTodoList
+                {!this.props.isTodoInfo
                     ? <Checkbox checked={this.state.areActive}
                                 onChange={this._showActiveTodos}>Show active</Checkbox>
                     : null}
 
-                {this.props.isTodoList
+                {!this.props.isTodoInfo
                     ? <Search searchForTodo={this._searchForTodo}
                               clearSearch={this._clearSearch}/>
                     : null}
@@ -78,6 +78,7 @@ class Search extends React.Component {
                              placeholder="Search"
                              value={this.state.searchValue}
                              onChange={this._searchForTodo}/>
+
                 <div className="container-header-search">
                     <FormControl.Feedback>
                         <Glyphicon glyph="remove"

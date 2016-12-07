@@ -13,6 +13,9 @@
 }
 
 .todo-btns {
+  display: flex;
+  justify-content: space-between;
+  width: 190px;
   align-self: flex-end;
   margin-bottom: 25px;
 }

@@ -7,8 +7,8 @@ import {Button, FormControl, FormGroup, Checkbox} from "react-bootstrap";
 
 export default class TodoInfo extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             currentTodo: {},
             todoStatus: false,
@@ -24,9 +24,9 @@ export default class TodoInfo extends React.Component {
     componentWillMount() {
         let currentTodo = {};
         this.props.categories.forEach((cat) => {
-            if (cat.id == this.props.categoryId) {
+            if (cat.id == this.props.params.categoryId) {
                 cat.todos.forEach(todo => {
-                    if (todo.id == this.props.todoId) {
+                    if (todo.id == this.props.params.todoId) {
                         currentTodo = todo;
                     }
                 });
@@ -44,9 +44,9 @@ export default class TodoInfo extends React.Component {
     componentWillReceiveProps(nextProps) {
         let currentTodo = {};
         this.props.categories.forEach((cat) => {
-            if (cat.id == nextProps.categoryId) {
+            if (cat.id == nextProps.params.categoryId) {
                 cat.todos.forEach(todo => {
-                    if (todo.id == nextProps.todoId) {
+                    if (todo.id ==  nextProps.params.todoId) {
                         currentTodo = todo;
                     }
                 });
@@ -88,9 +88,9 @@ export default class TodoInfo extends React.Component {
             <div className="todo">
                 <div className="todo-btns">
                     <SaveChanges saveChanges={this._saveChanges}
-                                 categoryId={this.props.categoryId}/>
-                    <span> </span>
-                    <Cancel categoryId={this.props.categoryId}/>
+                                 categoryId={this.props.params.categoryId}/>
+
+                    <Cancel categoryId={this.props.params.categoryId}/>
                 </div>
 
                 <EditName name={this.state.currentTodo.name}
@@ -171,6 +171,7 @@ class Status extends React.Component {
 }
 
 class Description extends React.Component {
+
     render() {
         return (
             <FormGroup>
