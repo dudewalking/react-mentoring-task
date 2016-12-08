@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import {Modal, Glyphicon, FormGroup, InputGroup, Button} from "react-bootstrap";
 
 export class Categories extends React.Component {
@@ -120,7 +120,8 @@ class Category extends React.Component {
 
                 {this.props.isTodoInfo
                     ? <TodoTools/>
-                    : <TodoListTools changeCategoryName={this._changeCategoryName}/>}
+                    : <TodoListTools changeCategoryName={this._changeCategoryName}
+                                     categoryId={this.props.category.id}/>}
             </li>
         );
     }
@@ -143,6 +144,7 @@ class TodoListTools extends React.Component {
     }
 
     _openModal() {
+        hashHistory.push(`/category/${this.props.categoryId}`);
         this.setState({isVisible: true});
     }
 
@@ -153,6 +155,7 @@ class TodoListTools extends React.Component {
     render() {
         return (
             <div className="category-tool">
+
                 <Glyphicon glyph="edit"
                            style={{cursor: "pointer"}}
                            onClick={this._openModal}/>
