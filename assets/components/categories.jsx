@@ -2,26 +2,26 @@
 
 import React from "react";
 import {Link} from "react-router";
-import {Glyphicon, FormGroup, InputGroup, Button} from "react-bootstrap";
+import {Modal, Glyphicon, FormGroup, InputGroup, Button} from "react-bootstrap";
 
 export class Categories extends React.Component {
 
-    render() {
-        return (
-            <div className="categories">
-                {this.props.children}
-            </div>
-        );
-    }
-}
-
-export class CategoriesList extends React.Component {
-
-    _changeCategoryName(name) {
-        console.log(name);
+    constructor() {
+        super();
+        this._addCategory = this._addCategory.bind(this);
+        this._changeCategoryName = this._changeCategoryName.bind(this);
     }
 
+    _addCategory(name) {
+        this.props.addCategory(name);
+    }
+
+    _changeCategoryName(categoryId, name) {
+        this.props.changeCategoryName(categoryId, name);
+    }
+
     render() {
+
         const categories = this.props.categories.map(category => {
             return <Category key={category.id}
                              isTodoInfo={this.props.isTodoInfo}
@@ -30,16 +30,23 @@ export class CategoriesList extends React.Component {
         });
 
         return (
-            <div className="categories-tree">
-                <ul>
-                    {categories}
-                </ul>
+            <div className="categories">
+                {!this.props.isTodoInfo
+                    ? <CategoryAddButton addCategory={this._addCategory}/>
+                    : null}
+
+                <div className="categories-tree">
+                    <ul>
+                        {categories}
+                    </ul>
+                </div>
             </div>
         );
     }
 }
 
-export class CategoryAddButton extends React.Component {
+
+class CategoryAddButton extends React.Component {
 
     constructor() {
         super();
@@ -93,8 +100,8 @@ class Category extends React.Component {
         this._changeCategoryName = this._changeCategoryName.bind(this);
     }
 
-    _changeCategoryName() {
-        this.props.changeCategoryName(this.props.category.name);
+    _changeCategoryName(name) {
+        this.props.changeCategoryName(this.props.category.id, name);
     }
 
     render() {
@@ -123,11 +130,24 @@ class TodoListTools extends React.Component {
 
     constructor() {
         super();
+        this.state = {
+            isVisible: false
+        };
+        this._openModal = this._openModal.bind(this);
+        this._closeModal = this._closeModal.bind(this);
         this._changeCategoryName = this._changeCategoryName.bind(this);
     }
 
-    _changeCategoryName() {
-        this.props.changeCategoryName();
+    _changeCategoryName(name) {
+        this.props.changeCategoryName(name);
+    }
+
+    _openModal() {
+        this.setState({isVisible: true});
+    }
+
+    _closeModal() {
+        this.setState({isVisible: false});
     }
 
     render() {
@@ -135,7 +155,7 @@ class TodoListTools extends React.Component {
             <div className="category-tool">
                 <Glyphicon glyph="edit"
                            style={{cursor: "pointer"}}
-                           onClick={this._changeCategoryName}/>
+                           onClick={this._openModal}/>
 
                 <div className="tools pull-right">
                     <Glyphicon glyph="trash"
@@ -143,6 +163,11 @@ class TodoListTools extends React.Component {
                     <Glyphicon glyph="plus"
                                style={{cursor: "pointer"}}/>
                 </div>
+
+                <CategoryModal isVisible={this.state.isVisible}
+                               closeModal={this._closeModal}
+                               changeCategoryName={this._changeCategoryName}/>
+
             </div>
         );
     }
@@ -157,6 +182,69 @@ class TodoTools extends React.Component {
                     <Glyphicon glyph="backward"/>
                 </Button>
             </div>
+        );
+    }
+}
+
+class CategoryModal extends React.Component {
+
+    constructor() {
+        super();
+        this._close = this._close.bind(this);
+        this._changeCategoryName = this._changeCategoryName.bind(this);
+        this._handleKeyPress = this._handleKeyPress.bind(this);
+    }
+
+    _changeCategoryName() {
+        if (this.input.value) {
+            this.props.changeCategoryName(this.input.value);
+            this._close();
+        }
+    }
+
+    _close() {
+        this.props.closeModal();
+    }
+
+    _handleKeyPress(e) {
+        if (e.key === "Enter") {
+            if (this.input.value) {
+                this.props.changeCategoryName(e.target.value);
+                this._close();
+            }
+        }
+    }
+
+    render() {
+        return (
+            <Modal show={this.props.isVisible} onHide={this._close}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Category Settings</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    <FormGroup className="category-input">
+                        <InputGroup>
+                            <input className="form-control"
+                                   type="text"
+                                   placeholder="Enter new category title"
+                                   ref={input => this.input = input}
+                                   onKeyPress={this._handleKeyPress}
+                                   maxLength="30"/>
+
+                            <InputGroup.Button>
+                                <Button bsStyle="danger"
+                                        onClick={this._changeCategoryName}>Change</Button>
+                            </InputGroup.Button>
+
+                        </InputGroup>
+                    </FormGroup>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this._close}>Close</Button>
+                </Modal.Footer>
+            </Modal>
         );
     }
 }

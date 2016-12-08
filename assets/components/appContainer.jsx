@@ -55,6 +55,7 @@ export default class AppContainer extends React.Component {
         this.searchForTodo = this.searchForTodo.bind(this);
         this.showActiveTodos = this.showActiveTodos.bind(this);
         this.changeTodoStatus = this.changeTodoStatus.bind(this);
+        this.changeCategoryName= this.changeCategoryName.bind(this);
     }
 
     render() {
@@ -69,6 +70,7 @@ export default class AppContainer extends React.Component {
                 areActiveTodos: this.state.areActive,
                 isTodoInfo: this.props.params.todoId,
                 changeTodoStatus: this.changeTodoStatus,
+                changeCategoryName: this.changeCategoryName,
             })
         );
 
@@ -155,6 +157,20 @@ export default class AppContainer extends React.Component {
                     task.isDone = !task.isDone;
                 }
             });
+        });
+
+        this.setState({
+            categories: updatedCategories
+        });
+    }
+
+    changeCategoryName(categoryId, name){
+        const updatedCategories = [...this.state.categories];
+
+        updatedCategories.forEach((cat) => {
+            if (cat.id == categoryId) {
+                cat.name = name;
+            }
         });
 
         this.setState({

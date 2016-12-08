@@ -3,7 +3,7 @@
 import React from "react";
 import {ProgressBar} from "react-bootstrap";
 import Body from "./body.jsx";
-import {Categories, CategoryAddButton, CategoriesList} from "./categories.jsx";
+import {Categories} from "./categories.jsx";
 
 export default class MainPage extends React.Component {
 
@@ -13,6 +13,7 @@ export default class MainPage extends React.Component {
         this._updateTodo = this._updateTodo.bind(this);
         this._addCategory = this._addCategory.bind(this);
         this._changeTodoStatus = this._changeTodoStatus.bind(this);
+        this._changeCategoryName = this._changeCategoryName.bind(this);
     }
 
     _updateTodo(todo) {
@@ -21,6 +22,10 @@ export default class MainPage extends React.Component {
 
     _changeTodoStatus(todo) {
         this.props.changeTodoStatus(todo);
+    }
+
+    _changeCategoryName(categoryId, name) {
+        this.props.changeCategoryName(categoryId, name);
     }
 
     _addCategory(name) {
@@ -47,15 +52,10 @@ export default class MainPage extends React.Component {
             <div className="main-page">
                 <Progress isTodoInfo={this.props.isTodoInfo}/>
                 <Body>
-                <Categories>
-
-                    {!this.props.isTodoInfo
-                        ? <CategoryAddButton addCategory={this._addCategory}/>
-                        : null}
-
-                    <CategoriesList categories={this.props.categories}
-                                    isTodoInfo={this.props.isTodoInfo}/>
-                </Categories>
+                <Categories categories={this.props.categories}
+                            addCategory={this._addCategory}
+                            isTodoInfo={this.props.isTodoInfo}
+                            changeCategoryName={this._changeCategoryName}/>
 
                 {children}
 
