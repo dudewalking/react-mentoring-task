@@ -116,7 +116,7 @@ export default class AppContainer extends React.Component {
 
         updatedCategories.forEach((cat) => {
             if (cat.id == categoryId) {
-                cat.todos.push({
+                cat.todos.unshift({
                     id: this.state.counter++, //todo create db
                     name: name,
                     isDone: false

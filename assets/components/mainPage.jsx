@@ -3,7 +3,7 @@
 import React from "react";
 import {ProgressBar} from "react-bootstrap";
 import Body from "./body.jsx";
-import {Categories, CategoriesList, CategoryAddButton} from "./categories.jsx";
+import {Categories, CategoryAddButton, CategoriesList} from "./categories.jsx";
 
 export default class MainPage extends React.Component {
 

@@ -78,30 +78,25 @@ class AddTodoButton extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            inputValue: ""
-        };
-        this._addTodo = this._addTodo.bind(this);
-        this._changeValue = this._changeValue.bind(this);
+        this._addTodo= this._addTodo.bind(this);
         this._handleKeyPress = this._handleKeyPress.bind(this);
     }
 
     _addTodo() {
-        this.props.addTodo(this.state.inputValue);
-        this.setState({inputValue: ""});
-    }
-
-    _changeValue(e) {
-        this.setState({inputValue: e.target.value});
+        if (this.input.value) {
+            this.props.addTodo(this.input.value);
+            this.input.value = "";
+        }
     }
 
     _handleKeyPress(e) {
         if (e.key === "Enter") {
-            this.props.addTodo(e.target.value);
-            this.setState({inputValue: ""});
+            if (this.input.value) {
+                this.props.addTodo(e.target.value);
+                this.input.value = "";
+            }
         }
     }
-
     render() {
         return (
             <FormGroup className="todos-input">
@@ -109,12 +104,13 @@ class AddTodoButton extends React.Component {
                     <input type="text"
                            className="form-control"
                            placeholder="Text input with button"
-                           value={this.state.inputValue}
-                           onChange={this._changeValue}
+                           ref={input => this.input = input}
                            onKeyPress={this._handleKeyPress}
                            maxLength="50"/>
+
                     <InputGroup.Button>
-                        <Button bsStyle="danger" onClick={this._addTodo}>Add</Button>
+                        <Button bsStyle="danger"
+                                onClick={this._addTodo}>Add</Button>
                     </InputGroup.Button>
                 </InputGroup>
             </FormGroup>
